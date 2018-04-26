@@ -122,4 +122,11 @@ public class GameOfLife {
     public void resetFeld(){
         feld =new boolean[feld.length][feld[0].length];
     }
+    public int getHight(){
+        return feld[0].length;
+    }
+    public int getLenght(){
+        return feld.length;
+    }
+
 }
