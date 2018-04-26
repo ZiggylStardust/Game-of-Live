@@ -26,7 +26,7 @@ public class GameOfLife extends Observable {
     GameOfLife(int x, int y, Konstruktionen muster){
         feld = new boolean[x][y];
         boolean[][] figur=KonstruktionsFeld.getForm(muster);
-        if(figur.length< feld.length&&figur[0].length< feld[0].length){
+        if(figur.length< getLength()&&figur[0].length< getHeight()){
             for(x=0;x<figur.length;x++){
                 for(y=0;y<figur[0].length;y++){
                     feld[x][y]=figur[x][y];
@@ -41,14 +41,14 @@ public class GameOfLife extends Observable {
      */
     public void updateFeld() {
 
-        boolean[][] tempFeld = new boolean[feld.length][feld[0].length];
-        for (int x = 0; x < feld.length; x++) {
-            for (int y = 0; y < feld[0].length; y++) {
+        boolean[][] tempFeld = new boolean[getLength()][getHeight()];
+        for (int x = 0; x < getLength(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
             tempFeld[x][y]=checkSurrounding(x,y);
             }
         }
-        for (int x = 0; x < feld.length; x++) {
-            for (int y = 0; y < feld[0].length; y++) {
+        for (int x = 0; x < getLength(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
                 feld[x][y]=tempFeld[x][y];
             }
         }
@@ -72,15 +72,15 @@ public class GameOfLife extends Observable {
                  */
                 if(xPos!=x&&yPos!=y) {
                     if (xPos == -1) {
-                        xPos = feld.length - 1;
+                        xPos = getLength() - 1;
                     }
-                    if (xPos == feld.length) {
+                    if (xPos == getLength()) {
                         xPos = 0;
                     }
                     if (yPos == -1) {
-                        yPos = feld[0].length - 1;
+                        yPos = getHeight() - 1;
                     }
-                    if (yPos == feld[0].length) {
+                    if (yPos == getHeight()) {
                         yPos = 0;
                     }
                     if (feld[xPos][yPos]) {         //Wenn die betrachtete Zelle lebendig ist, wird der Zähler erhöht
@@ -122,7 +122,7 @@ public class GameOfLife extends Observable {
      * Setzte feld zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
      */
     public void resetFeld(){
-        feld =new boolean[feld.length][feld[0].length];
+        feld =new boolean[getLength()][getHeight()];
     }
     public int getHeight(){
         return feld[0].length;
