@@ -129,4 +129,5 @@ public class GameOfLife {
         return feld.length;
     }
 
+    public void addFigure(int x, int y, boolean[][] figure){}
 }

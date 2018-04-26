@@ -2,6 +2,7 @@ import javax.swing.*;
 
 public class AnzeigeFlaeche extends JFrame{
     private JDesktopPane desk;
+    static AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
 
     public AnzeigeFlaeche(){
         desk = new JDesktopPane(); // neue DesktopPane
@@ -20,7 +21,6 @@ public class AnzeigeFlaeche extends JFrame{
         child.setVisible (true); // und sichtbar machen
     }
     public static void main (String[] args) {
-        AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
         desktop.addChild (new ViewGame (desktop), 10, 10); // Ein Kindfenster einfuegen
     }
 
