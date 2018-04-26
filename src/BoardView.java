@@ -22,13 +22,13 @@ public class BoardView extends JPanel implements Observer{
 
     private void initializeBoard() {
         boardElements = new JButton[model.getLength()][model.getHeight()];
-        for(int i = 0; i < model.getLength(); i++) {
-            for(int j = 0; j < model.getHeight(); j++) {
-                final int x=i;
-                final int y=j;
-                boardElements[i][j] = new JButton();
-                add(boardElements[i][j]);
-                boardElements[i][j].addMouseListener(new java.awt.event.MouseAdapter() {
+        for(int i = 0; i < model.getHeight(); i++) {
+            for(int j = 0; j < model.getLength(); j++) {
+                final int x=j;
+                final int y=i;
+                boardElements[j][i] = new JButton();
+                add(boardElements[j][i]);
+                boardElements[j][i].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         if(viewGame.isPaint){
                             model.reanimateCell(x,y);
@@ -37,7 +37,7 @@ public class BoardView extends JPanel implements Observer{
                         }
                     }
             });
-                boardElements[i][j].addActionListener(new ActionListener() {
+                boardElements[j][i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if(viewGame.isSet){
                             model.reanimateCell(x,y);
@@ -50,20 +50,34 @@ public class BoardView extends JPanel implements Observer{
                 } );
             }
         }
-        System.out.println("");
     }
 
     private void updateBoard() {
-        for(int i = 0; i < model.getLength(); i++) {
-            for(int j = 0; j < model.getHeight(); j++) {
-                if(model.feld[i][j]){
-                    boardElements[i][j].setBackground(viewGame.getAlive());
-                } else {
-                    boardElements[i][j].setBackground(viewGame.getDead());
+        if(!viewGame.flip) {
+            for (int i = 0; i < model.getHeight(); i++) {
+                for (int j = 0; j < model.getLength(); j++) {
+                    if (model.feld[j][i]) {
+                        boardElements[j][i].setBackground(viewGame.getAlive());
+                    } else {
+                        boardElements[j][i].setBackground(viewGame.getDead());
+                    }
                 }
             }
         }
-    }
+        else{
+            for (int i = 0; i < model.getHeight(); i++) {
+                for (int j = 0; j < model.getLength(); j++) {
+
+                    if (model.feld[j][i]) {
+                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getAlive());
+                    } else {
+                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getDead());
+                    }
+                }
+            }
+        }
+        }
+
 
 
     @Override

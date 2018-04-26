@@ -16,6 +16,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
     private Color alive=Color.RED;
     boolean isFigure=false;
     boolean [][] figure={{false}};
+    boolean flip=false;
 
     UpdateThread thread;
     private GameOfLife game;
@@ -93,7 +94,9 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 dead=JColorChooser.showDialog(this,"Select dead color",Color.GREEN);
                 break;
             }
-            case "Flip":{}
+            case "Flip":{
+                flip=!flip; break;
+            }
             case "Glider":
                 isPaint=false;
                 isSet=false;
