@@ -16,12 +16,15 @@ public class AnzeigeFlaeche extends JFrame{
         child.setLocation (x, y); // Ort und
         child.setSize (200, 150); // Groesse setzen
         child.setDefaultCloseOperation (JInternalFrame.DISPOSE_ON_CLOSE); // Schiessoperation
-        desk.add (child); // Kindfenster einfuegen
-        child.setVisible (true); // und sichtbar machen
+        desk.add (child); // Kindfenster einfuegenchild.setVisible (true); // und sichtbar machen
     }
     public static void main (String[] args) {
+        GameOfLife temp = new GameOfLife(5, 7);
         AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
-        desktop.addChild (new ViewGame (desktop), 10, 10); // Ein Kindfenster einfuegen
+        ViewGame viewGame1 = new ViewGame(desktop);
+        BoardView boardView1 = new BoardView(temp);
+        viewGame1.add(boardView1);
+        desktop.addChild (viewGame1, 10, 10); // Ein Kindfenster einfuegen
     }
 
 }

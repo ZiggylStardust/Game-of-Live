@@ -1,8 +1,10 @@
+import java.util.Observable;
+
 /**
  * Game of Live Main logic class
  *
  */
-public class GameOfLife {
+public class GameOfLife extends Observable {
     public boolean[][] feld;        //feld der Zellen, true ist lebende, false ist tote Zelle
 
     /**
@@ -122,10 +124,10 @@ public class GameOfLife {
     public void resetFeld(){
         feld =new boolean[feld.length][feld[0].length];
     }
-    public int getHight(){
+    public int getHeight(){
         return feld[0].length;
     }
-    public int getLenght(){
+    public int getLength(){
         return feld.length;
     }
 

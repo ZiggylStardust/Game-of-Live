@@ -16,15 +16,14 @@ public class ViewGame extends JInternalFrame {
     public ViewGame(AnzeigeFlaeche myView){
         super ("Game " + (++nr), true, true);
         this.myView=myView;
-        Container cp = getContentPane();
-        cp.setLayout(new GridLayout(game.getLenght(),game.getHight()));
+        /*Container cp = getContentPane();
+        cp.setLayout(new GridLayout(game.getLength(),game.getHeight()));
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<9)?2:3].add(items[i]); // add Items in Menue 0|1|2
-        }
+        }*/
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
         setJMenuBar (menuBar);
-
-
+        setVisible(true);
     }
 }
