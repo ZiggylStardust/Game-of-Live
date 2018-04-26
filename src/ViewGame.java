@@ -19,7 +19,7 @@ public class ViewGame extends JInternalFrame {
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(game.getLenght(),game.getHight()));
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
-            menus[(i<3)?0:(i<6)?1:(i<9)?2:3].add(items[i]); // add Items in Menue 0|1|2
+            menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
         }
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
