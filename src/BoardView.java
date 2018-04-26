@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 public class BoardView extends JPanel implements Observer{
     private GameOfLife model;
-    ViewGame viewGame;
+    private ViewGame viewGame;
     private JButton boardElements[][];
 
     public BoardView(GameOfLife model, ViewGame viewGame) {
@@ -30,24 +32,39 @@ public class BoardView extends JPanel implements Observer{
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         if(viewGame.isPaint){
                             model.reanimateCell(x,y);
+                            boardElements[x][y].setBackground(viewGame.getAlive());
+
                         }
                     }
             });
+                boardElements[i][j].addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if(viewGame.isSet){
+                            model.reanimateCell(x,y);
+                            boardElements[x][y].setBackground(viewGame.getAlive());
+                        }
+                        if(viewGame.isFigure){
+                            model.addFigure(x,y,viewGame.getFigure());
+                        }
+                    }
+                } );
             }
         }
+        System.out.println("");
     }
 
     private void updateBoard() {
         for(int i = 0; i < model.getLength(); i++) {
             for(int j = 0; j < model.getHeight(); j++) {
                 if(model.feld[i][j]){
-                    boardElements[i][j].setBackground(Color.RED);
+                    boardElements[i][j].setBackground(viewGame.getAlive());
                 } else {
-                    boardElements[i][j].setBackground(Color.GREEN);
+                    boardElements[i][j].setBackground(viewGame.getDead());
                 }
             }
         }
     }
+
 
     @Override
     public void update(Observable o, Object arg) {

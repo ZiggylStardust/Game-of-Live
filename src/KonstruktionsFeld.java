@@ -9,7 +9,7 @@ public class KonstruktionsFeld {
                     {{false, true,true},    //f-Pentomino, chaotische entwicklung
                     {true, true,false},
                     {false,true,false}};
-    static private boolean[][] blinker={{true},{true}}; //Blinker, ändert seine ausrichtung
+    static private boolean[][] blinker={{true},{true},{true}}; //Blinker, ändert seine ausrichtung
     static private boolean[][] bipole={{true, true, false,false},{true, true, false,false},
                                         {false, false,true,true},{false, false,true,true}};
 

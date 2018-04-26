@@ -22,11 +22,11 @@ public class AnzeigeFlaeche extends JFrame{
         desk.add (child); // Kindfenster einfuegenchild.setVisible (true); // und sichtbar machen
     }
     public static void main (String[] args) {
-        GameOfLife temp = new GameOfLife(32, 32);
-        AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
-        ViewGame viewGame1 = new ViewGame(desktop);
-        BoardView boardView1 = new BoardView(temp, viewGame1);
+        GameOfLife game = new GameOfLife(32, 32,Konstruktionen.GLEITER);
+        ViewGame viewGame1 = new ViewGame(desktop, game);
+        BoardView boardView1 = new BoardView(game, viewGame1);
         viewGame1.add(boardView1);
+        game.addObserver(boardView1);
         desktop.addChild (viewGame1, 10, 10); // Ein Kindfenster einfuegen
     }
 

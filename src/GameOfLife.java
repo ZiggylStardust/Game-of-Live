@@ -27,8 +27,8 @@ public class GameOfLife extends Observable {
         feld = new boolean[x][y];
         boolean[][] figur=KonstruktionsFeld.getForm(muster);
         if(figur.length< getLength()&&figur[0].length< getHeight()){
-            for(x=0;x<figur.length;x++){
-                for(y=0;y<figur[0].length;y++){
+            for(y=0;y<figur[0].length;y++){
+                for(x=0;x<figur.length;x++){
                     feld[x][y]=figur[x][y];
                 }
             }
@@ -42,16 +42,19 @@ public class GameOfLife extends Observable {
     public void updateFeld() {
 
         boolean[][] tempFeld = new boolean[getLength()][getHeight()];
-        for (int x = 0; x < getLength(); x++) {
-            for (int y = 0; y < getHeight(); y++) {
+        for (int y = 0; y < getLength(); y++) {
+            for (int x = 0; x < getHeight(); x++) {
             tempFeld[x][y]=checkSurrounding(x,y);
             }
         }
-        for (int x = 0; x < getLength(); x++) {
-            for (int y = 0; y < getHeight(); y++) {
+        for (int y = 0; y < getLength(); y++) {
+            for (int x = 0; x < getHeight(); x++) {
                 feld[x][y]=tempFeld[x][y];
             }
         }
+        setChanged();
+        notifyObservers();
+
     }
 
     /**
@@ -63,14 +66,14 @@ public class GameOfLife extends Observable {
     public boolean checkSurrounding(int x, int y) {
         boolean cellsLives = false;     //return wert
         int countOfLivingCells = 0;     // Anzahl der lebenden Zellen, die sie umgeben
-        for (int i = x - 1; i < x + 1; i++) {       //über die 8 Zellen itereiren, die die Zelle be x,y umgibt
-            for (int k = y - 1; k < y + 1; k++) {
-                int xPos = i;                       //Position der Zelle, die jetzt betrachtet wird (eine der Umgebenden Zellen)
-                int yPos = k;
+        for (int i = y - 1; i <= y + 1; i++) {       //über die 8 Zellen itereiren, die die Zelle be x,y umgibt
+            for (int k = x - 1; k <= x + 1; k++) {
+                int yPos = i;                       //Position der Zelle, die jetzt betrachtet wird (eine der Umgebenden Zellen)
+                int xPos = k;
                 /**
                  * Überprüft, ob die Zelle auserhalb des Arrays liegt, wenn das Passiert, wird die gegüberliegnde Zelle betrachet
                  */
-                if(xPos!=x&&yPos!=y) {
+                if(!(k==x&&i==y)) {
                     if (xPos == -1) {
                         xPos = getLength() - 1;
                     }
@@ -116,6 +119,7 @@ public class GameOfLife extends Observable {
      */
     public void reanimateCell(int x, int y){
         feld[x][y]=true;
+
     }
 
     /**
@@ -131,5 +135,17 @@ public class GameOfLife extends Observable {
         return feld.length;
     }
 
-    public void addFigure(int x, int y, boolean[][] figure){}
-}
+    public void addFigure(int x, int y, boolean[][] figure){
+        for(int i=0;i<figure[0].length;i++){
+            for(int k=0;k<figure.length;k++){
+                if(figure[k][i]){
+                    int xPos=(x+k)%getLength();
+                    int yPos=(y+i)%getHeight();
+                    feld[xPos][yPos]=true;
+                    }
+                }
+            }
+        }
+
+    }
+
