@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 public class ViewGame extends JInternalFrame implements ActionListener {
     static int nr = 0, xpos = 30, ypos = 30;
     AnzeigeFlaeche myView;
-    private GameOfLife game=new GameOfLife(32,32);
-
+    boolean isPaint=false;
+    BoardView boardView;
     JMenuBar menuBar = new JMenuBar();
     JMenu[] menus = { new JMenu("Modus"), // Array mit 3 Menues
             new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
@@ -19,8 +19,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
     public ViewGame(AnzeigeFlaeche myView){
         super ("Game " + (++nr), true, true);
         this.myView=myView;
-        Container cp = getContentPane();
-        cp.setLayout(new GridLayout(game.getLength(),game.getHeight()));
+
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
