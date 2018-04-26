@@ -28,6 +28,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
         setJMenuBar (menuBar);
+        setVisible(true);
 
 
     }

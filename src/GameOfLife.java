@@ -1,8 +1,10 @@
+import java.util.Observable;
+
 /**
  * Game of Live Main logic class
  *
  */
-public class GameOfLife {
+public class GameOfLife extends Observable {
     public boolean[][] feld;        //feld der Zellen, true ist lebende, false ist tote Zelle
 
     /**
