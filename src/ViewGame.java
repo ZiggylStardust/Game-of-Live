@@ -11,7 +11,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
     AnzeigeFlaeche myView;
     boolean isPaint=false;
     boolean isSet=false;
-    boolean isRun=false;
+    PassBoolean isRun=new PassBoolean();
     private Color dead=Color.GREEN;
     private Color alive=Color.RED;
     boolean isFigure=false;
@@ -44,25 +44,42 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
 
     }
+    public ViewGame(AnzeigeFlaeche myView, GameOfLife game, PassBoolean isRun){
+        super ("Game " + (++nr), true, true);
+        this.myView=myView;
+        this.isRun=isRun;
+        this.game=game;
+        thread=new UpdateThread(game, this);
+        for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
+            menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
+            items[i].addActionListener(this);
+        }
+        for (int i = 0; i < menus.length; i++) // fuer alle Menues:
+            menuBar.add (menus[i]); // fuege ein in Menue-Leiste
+        setJMenuBar (menuBar);
+        setVisible(true);
+
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand().toString()){
 
             case "Run/Pause":{
-                isRun=!isRun;
+                isRun.isRun=!isRun.isRun;
                 isPaint=false;
                 isSet=false;
                 new Thread(thread).start();
                 break;
             }
             case "Set":{
-                isRun=false;
+                isRun.isRun=false;
                 isSet=true;
                     break;
             }
             case "Paint":{
-                isRun=false;
+                isRun.isRun=false;
                 isPaint=true;
                 break;
             }
