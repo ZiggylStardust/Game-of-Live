@@ -30,10 +30,10 @@ public class GameOfLife extends Observable {
             for(y=0;y<figur[0].length;y++){
                 for(x=0;x<figur.length;x++){
                     feld[x][y]=figur[x][y];
+
                 }
             }
         }
-        System.out.println();
     }
 
     /**
@@ -128,6 +128,9 @@ public class GameOfLife extends Observable {
      */
     public void resetFeld(){
         feld =new boolean[getLength()][getHeight()];
+        setChanged();
+        notifyObservers();
+
     }
     public int getHeight(){
         return feld[0].length;

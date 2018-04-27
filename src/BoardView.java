@@ -13,8 +13,7 @@ public class BoardView extends JPanel implements Observer{
     public BoardView(GameOfLife model, ViewGame viewGame) {
         this.model = model;
         this.viewGame=viewGame;
-        System.out.println(model.getHeight());
-        this.setLayout(new GridLayout(model.getLength(), model.getHeight()));
+        this.setLayout(new GridLayout(model.getHeight(), model.getLength()));
         initializeBoard();
         updateBoard();
     }
