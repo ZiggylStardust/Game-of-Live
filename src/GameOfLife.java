@@ -33,6 +33,7 @@ public class GameOfLife extends Observable {
                 }
             }
         }
+        System.out.println();
     }
 
     /**
@@ -42,13 +43,13 @@ public class GameOfLife extends Observable {
     public void updateFeld() {
 
         boolean[][] tempFeld = new boolean[getLength()][getHeight()];
-        for (int y = 0; y < getLength(); y++) {
-            for (int x = 0; x < getHeight(); x++) {
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getLength(); x++) {
             tempFeld[x][y]=checkSurrounding(x,y);
             }
         }
-        for (int y = 0; y < getLength(); y++) {
-            for (int x = 0; x < getHeight(); x++) {
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getLength(); x++) {
                 feld[x][y]=tempFeld[x][y];
             }
         }

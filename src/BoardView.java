@@ -16,7 +16,6 @@ public class BoardView extends JPanel implements Observer{
         System.out.println(model.getHeight());
         this.setLayout(new GridLayout(model.getLength(), model.getHeight()));
         initializeBoard();
-
         updateBoard();
     }
 
