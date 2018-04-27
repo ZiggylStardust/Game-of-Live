@@ -3,19 +3,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Window that gives option to enter the size of a new game
+ * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @Version: 1.0
+ * @Date: 27/04/18
+ */
 public class StartGameWindow extends JInternalFrame implements ActionListener{
     private JDesktopPane desk;
-    private JTextField xSize=new JTextField("Enter x Size (only Integer)");
-    private JTextField ySize=new JTextField("Enter y Size (only Integer)");
-    private JButton startGame=new JButton("Start");
+    private JTextField xSize=new JTextField("Enter length (only Integer)"); //Textfield to enter the height and length
+    private JTextField ySize=new JTextField("Enter height (only Integer)");
+    private JButton startGame=new JButton("Start");                     //startbutton
     private static int x=0;
     private static int y=0;
 
+    /**
+     * Construktor, adds Listeners to Button
+     * @param desk      //refernce to JDesktopPane
+     */
     public StartGameWindow(JDesktopPane desk){
         this.desk=desk;
         this.setLayout(new FlowLayout());
-        xSize.addActionListener(this);
-        ySize.addActionListener(this);
         startGame.addActionListener(this);
         this.setSize(200,100);
 
@@ -26,14 +34,12 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
         this.setDefaultCloseOperation (JInternalFrame.DISPOSE_ON_CLOSE);
 
     }
-    public void addChild (JInternalFrame child, int x, int y) { // Hinzufuegen
-        child.setLocation (x, y); // Ort und
-        child.setSize (1280, 720); // Groesse setzen
-        child.setDefaultCloseOperation (JInternalFrame.DISPOSE_ON_CLOSE); // Schiessoperation
-        desk.add (child); // Kindfenster einfuegenchild.setVisible (true); // und sichtbar machen
-    }
+
+    /**
+     * start methode, called to create a new game
+     */
     public  static void start(){
-        GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);
+        GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
         ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
         BoardView boardView1 = new BoardView(game, viewGame1);
         viewGame1.add(boardView1);
@@ -44,25 +50,15 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand().toString()){
-            case "xSize":{
-                    if(isNumeric(xSize.getText())){
-                        x=Integer.parseInt(xSize.getText());
-                    }
-                    break;
-                }
-            case "ySize":{
-                if(isNumeric(ySize.getText())){
-                    x=Integer.parseInt(ySize.getText());
-                }
-            }
+
             case "Start":{
-                if(isNumeric(xSize.getText())) {
-                    x = Integer.parseInt(xSize.getText());
+                if(isNumeric(xSize.getText())) {            //checks if Text was an integer
+                    x = Integer.parseInt(xSize.getText());  //saves the entered text as int
                 }
                 if(isNumeric(ySize.getText())){
                     y=Integer.parseInt(ySize.getText());
                 }
-                if(y>0&&x>0){
+                if(y>0&&x>0){                               //checks if positive numbers where entered
                     start();
                 }
                 break;
@@ -70,7 +66,7 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
         }
 
     }
-    public static boolean isNumeric(String str)
+    public static boolean isNumeric(String str)                 //checks if a String is an Integer
     {
         if(str==null) return false;
         try

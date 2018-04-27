@@ -1,5 +1,8 @@
 /**
  * Speichert die Muster als boolean array, und gibt sie aus
+ * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @Version: 1.0
+ * @Date: 27/04/18
  */
 public class KonstruktionsFeld {
     static private boolean[][] gleiter=    {{false,true, false},   //Gleiter als boolean Array

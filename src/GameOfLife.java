@@ -2,7 +2,9 @@ import java.util.Observable;
 
 /**
  * Game of Live Main logic class
- *
+ * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @Version: 1.0
+ * @Date: 27/04/18
  */
 public class GameOfLife extends Observable {
     public boolean[][] feld;        //feld der Zellen, true ist lebende, false ist tote Zelle
