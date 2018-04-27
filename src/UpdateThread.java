@@ -8,7 +8,7 @@ public class UpdateThread extends Thread {
     }
     @Override
     public void run() {
-        while(view.isRun.isRun) {
+        while(view.passBoolean.isRun) {
             game.updateFeld();
             try {
                 Thread.sleep(speed);

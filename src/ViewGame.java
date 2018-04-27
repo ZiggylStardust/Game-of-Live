@@ -9,9 +9,7 @@ import java.util.Observer;
 public class ViewGame extends JInternalFrame implements ActionListener {
     static int nr = 0, xpos = 30, ypos = 30;
     AnzeigeFlaeche myView;
-    boolean isPaint=false;
-    boolean isSet=false;
-    PassBoolean isRun=new PassBoolean();
+    PassBoolean passBoolean=new PassBoolean();
     private Color dead=Color.GREEN;
     private Color alive=Color.RED;
     boolean isFigure=false;
@@ -44,12 +42,12 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
 
     }
-    public ViewGame(AnzeigeFlaeche myView, GameOfLife game, PassBoolean isRun){
+    public ViewGame(AnzeigeFlaeche myView, GameOfLife game, PassBoolean passBoolean,UpdateThread thread){
         super ("Game " + (++nr), true, true);
         this.myView=myView;
-        this.isRun=isRun;
+        this.passBoolean=passBoolean;
         this.game=game;
-        thread=new UpdateThread(game, this);
+        this.thread=thread;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
@@ -67,20 +65,22 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         switch (e.getActionCommand().toString()){
 
             case "Run/Pause":{
-                isRun.isRun=!isRun.isRun;
-                isPaint=false;
-                isSet=false;
+                passBoolean.isRun=!passBoolean.isRun;
+                passBoolean.isPaint=false;
+                passBoolean.isSet=false;
                 new Thread(thread).start();
                 break;
             }
             case "Set":{
-                isRun.isRun=false;
-                isSet=true;
+                passBoolean.isRun=false;
+                passBoolean.isSet=true;
+                isFigure=false;
                     break;
             }
             case "Paint":{
-                isRun.isRun=false;
-                isPaint=true;
+                passBoolean.isRun=false;
+                passBoolean.isPaint=true;
+                isFigure=false;
                 break;
             }
             case "Fast":{
@@ -96,7 +96,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }
             case "new Window":{
-                ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
+                ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game,passBoolean,thread);
                 BoardView boardView1 = new BoardView(game, viewGame1);
                 viewGame1.add(boardView1);
                 game.addObserver(boardView1);
@@ -115,28 +115,28 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 flip=!flip; break;
             }
             case "Glider":
-                isPaint=false;
-                isSet=false;
+                passBoolean.isPaint=false;
+                passBoolean.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.GLEITER);
                 break;
             case "f-Pentomino":{
-                isPaint=false;
-                isSet=false;
+                passBoolean.isPaint=false;
+                passBoolean.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.F_PENTOMINO);
                 break;
                 }
             case "Blinker":{
-                isPaint=false;
-                isSet=false;
+                passBoolean.isPaint=false;
+                passBoolean.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.BLINKER);
                 break;
             }
             case "Biploe":{
-                isPaint=false;
-                isSet=false;
+                passBoolean.isPaint=false;
+                passBoolean.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.BIPLOE);
                 break;

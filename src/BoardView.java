@@ -30,7 +30,7 @@ public class BoardView extends JPanel implements Observer{
                 add(boardElements[j][i]);
                 boardElements[j][i].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        if(viewGame.isPaint){
+                        if(viewGame.passBoolean.isPaint){
                             model.reanimateCell(x,y);
                             boardElements[x][y].setBackground(viewGame.getAlive());
 
@@ -39,7 +39,7 @@ public class BoardView extends JPanel implements Observer{
             });
                 boardElements[j][i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if(viewGame.isSet){
+                        if(viewGame.passBoolean.isSet){
                             model.reanimateCell(x,y);
                             boardElements[x][y].setBackground(viewGame.getAlive());
                         }
