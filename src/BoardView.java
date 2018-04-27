@@ -53,32 +53,23 @@ public class BoardView extends JPanel implements Observer{
     }
 
     private void updateBoard() {
-        if(!viewGame.flip) {
+        if (!viewGame.flip) {
             for (int i = 0; i < model.getHeight(); i++) {
                 for (int j = 0; j < model.getLength(); j++) {
-                    if (model.feld[j][i]) {
-                        boardElements[j][i].setBackground(viewGame.getAlive());
+                    boolean modelElement = model.fields[j][i];
+                    JButton boardElement = viewGame.flip
+                            ? boardElements[model.getLength() - 1 - j][i]
+                            : boardElements[j][i];
+
+                    if (modelElement) {
+                        boardElement.setBackground(viewGame.getAlive());
                     } else {
-                        boardElements[j][i].setBackground(viewGame.getDead());
+                        boardElement.setBackground(viewGame.getDead());
                     }
                 }
             }
         }
-        else{
-            for (int i = 0; i < model.getHeight(); i++) {
-                for (int j = 0; j < model.getLength(); j++) {
-
-                    if (model.feld[j][i]) {
-                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getAlive());
-                    } else {
-                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getDead());
-                    }
-                }
-            }
-        }
-        }
-
-
+    }
 
     @Override
     public void update(Observable o, Object arg) {

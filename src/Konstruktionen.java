@@ -1,5 +1,5 @@
 /**
- * Liste der Konstuktionen, die ins feld platziert werden können
+ * Liste der Konstuktionen, die ins fields platziert werden können
  * Bis jetzt nur Gleiter und f-Pentomino
  */
 public enum Konstruktionen {

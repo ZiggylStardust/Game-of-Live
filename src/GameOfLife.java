@@ -5,7 +5,7 @@ import java.util.Observable;
  *
  */
 public class GameOfLife extends Observable {
-    public boolean[][] feld;        //feld der Zellen, true ist lebende, false ist tote Zelle
+    public boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
 
     /**
      * Construktor, setzte größe des Feldes
@@ -13,7 +13,7 @@ public class GameOfLife extends Observable {
      * @param y         Anzahl Zellen nach unten
      */
     GameOfLife(int x, int y) {
-        feld = new boolean[x][y];
+        fields = new boolean[x][y];
     }
 
     /**
@@ -24,19 +24,39 @@ public class GameOfLife extends Observable {
      */
 
     GameOfLife(int x, int y, Konstruktionen muster){
-        feld = new boolean[x][y];
+        fields = new boolean[x][y];
         boolean[][] figur=KonstruktionsFeld.getForm(muster);
         if(figur.length< getLength()&&figur[0].length< getHeight()){
             for(y=0;y<figur[0].length;y++){
                 for(x=0;x<figur.length;x++){
-                    feld[x][y]=figur[x][y];
+                    fields[x][y]=figur[x][y];
                 }
             }
         }
     }
 
+    private void setField(boolean value, int x, int y) {
+        if(fields[x][y] != value) {
+            fields[x][y] = value;
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    private void setFields(boolean[][] fields) {
+        for (int y = 0; y < getLength(); y++) {
+            for (int x = 0; x < getHeight(); x++) {
+                if(this.fields[x][y] != fields[x][y]) {
+                    this.fields[x][y] = fields[x][y];
+                }
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     /**
-     * Update das feld, durchs Array iterieren und auf jedes feld checkSurrounding anwenden, dann in neues Array kopieren
+     * Update das fields, durchs Array iterieren und auf jedes fields checkSurrounding anwenden, dann in neues Array kopieren
      * und dann das alte mit diesem überschreiben
      */
     public void updateFeld() {
@@ -47,14 +67,7 @@ public class GameOfLife extends Observable {
             tempFeld[x][y]=checkSurrounding(x,y);
             }
         }
-        for (int y = 0; y < getLength(); y++) {
-            for (int x = 0; x < getHeight(); x++) {
-                feld[x][y]=tempFeld[x][y];
-            }
-        }
-        setChanged();
-        notifyObservers();
-
+        setFields(tempFeld);
     }
 
     /**
@@ -86,7 +99,7 @@ public class GameOfLife extends Observable {
                     if (yPos == getHeight()) {
                         yPos = 0;
                     }
-                    if (feld[xPos][yPos]) {         //Wenn die betrachtete Zelle lebendig ist, wird der Zähler erhöht
+                    if (fields[xPos][yPos]) {         //Wenn die betrachtete Zelle lebendig ist, wird der Zähler erhöht
 
                         countOfLivingCells++;
                     }
@@ -97,13 +110,13 @@ public class GameOfLife extends Observable {
         /**
          * Implementierung der Regeln des Spiels
          */
-        if (!feld[x][y] && countOfLivingCells == 3) {   //bei genau 3 lebenden Zellen wird eine Tote Zelle wiederbelebt
+        if (!fields[x][y] && countOfLivingCells == 3) {   //bei genau 3 lebenden Zellen wird eine Tote Zelle wiederbelebt
             cellsLives = true;
         }
         if (countOfLivingCells < 2) {       //Bei Unter 2 umgebenden Zellen nstirbt sie
             cellsLives = false;
         }
-        if (feld[x][y] && countOfLivingCells >= 2) {        //Bei 2 oder 3 Zellen bleibt sie am Leben
+        if (fields[x][y] && countOfLivingCells >= 2) {        //Bei 2 oder 3 Zellen bleibt sie am Leben
             cellsLives = true;
         }
         if (countOfLivingCells > 3) {                       //Bei über 3 Zellen stirbt sie
@@ -118,21 +131,20 @@ public class GameOfLife extends Observable {
      * @param y y Position
      */
     public void reanimateCell(int x, int y){
-        feld[x][y]=true;
-
+        setField(true, x, y);
     }
 
     /**
-     * Setzte feld zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
+     * Setzte fields zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
      */
     public void resetFeld(){
-        feld =new boolean[getLength()][getHeight()];
+        fields =new boolean[getLength()][getHeight()];
     }
     public int getHeight(){
-        return feld[0].length;
+        return fields[0].length;
     }
     public int getLength(){
-        return feld.length;
+        return fields.length;
     }
 
     public void addFigure(int x, int y, boolean[][] figure){
@@ -141,14 +153,12 @@ public class GameOfLife extends Observable {
                 if(figure[k][i]){
                     int xPos=(x+k)%getLength();
                     int yPos=(y+i)%getHeight();
-                    feld[xPos][yPos]=true;
+                    setField(true, xPos, yPos);
                     }
                 }
             }
         setChanged();
         notifyObservers();
     }
-
-
-    }
+}
 

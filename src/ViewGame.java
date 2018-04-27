@@ -32,7 +32,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         super ("Game " + (++nr), true, true);
         this.myView=myView;
         this.game=game;
-        thread=new UpdateThread(game, this);
+        thread = new UpdateThread(game, this);
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
@@ -76,7 +76,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             }
             case "Slow":{
                 thread.setSpeed(2000);
-                break;
             }
             case "new Window":{
                 ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
