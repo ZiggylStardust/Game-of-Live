@@ -145,7 +145,10 @@ public class GameOfLife extends Observable {
                     }
                 }
             }
-        }
+        setChanged();
+        notifyObservers();
+    }
+
 
     }
 
