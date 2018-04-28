@@ -33,7 +33,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
      * @param myView        refrence to ViewGame
      * @param game          reference to GameOfLife
      * @param game   Reference to booleans
-     * @param thread        reference to Thread
      */
     public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
         super ("Game " + (++nr), true, true);
@@ -114,7 +113,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
             }
             case "FlipY":{                                       //flips on the y axis (left is right)
-                boardView.setFlipY(!boardView.isFlipY());
+                boardView.flipY=!boardView.flipY;
                 boardView.remapButtons();
 
 

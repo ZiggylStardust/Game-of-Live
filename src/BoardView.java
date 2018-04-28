@@ -17,7 +17,7 @@ public class BoardView extends JPanel implements Observer{
     private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
     boolean flipX=false;               //false is normal, 1 is flipped
-    private boolean flipY=false;
+    boolean flipY=false;
 
     /**
      *
@@ -68,8 +68,6 @@ public class BoardView extends JPanel implements Observer{
      * Update board methode, checks the array of cells and recolors the buttons accordingly
      */
     private void updateBoard() {
-        int xflip = flipX ? (model.getLength() - 1) : 0;
-        int yflip = flipY ? (model.getHeight() - 1) : 0;
             for (int i = 0; i < model.getHeight(); i++) {
                 for (int j = 0; j < model.getLength(); j++) {
                     boolean modelElement = model.fields[j][i];
@@ -77,7 +75,7 @@ public class BoardView extends JPanel implements Observer{
                     int y = flipX ? model.getLength() - 1 - i : i;
 
                     if (modelElement) {
-                        boardElements[x][j].setBackground(viewGame.getAlive());
+                        boardElements[x][y].setBackground(viewGame.getAlive());
                     } else {
                         boardElements[x][y].setBackground(viewGame.getDead());
                     }
@@ -90,16 +88,21 @@ public class BoardView extends JPanel implements Observer{
         }
 
         public void remapButtons() {
-            final int xflip = flipX ? (model.getLength() - 1) : 0;
-            final int yflip = flipY ? (model.getHeight() - 1) : 0;
-            for (int i = 0; i < (flipY ? model.getHeight() / 2 : model.getHeight()); i++) {
-                for (int j = 0; j < (flipX ? model.getLength() / 2 : model.getLength()); j++) {
-                    switchArray(j, i, Math.abs(xflip - j), Math.abs(yflip - i));
-
+            for (int i = 0; i < (model.getHeight()); i++) {
+                for (int j = 0; j < (model.getLength()); j++) {
+                remove(boardElements[j][i]);
                 }
-                System.out.println();
 
-        }
+        }for (int i = 0; i < (model.getHeight()); i++) {
+                for (int j = 0; j < (model.getLength()); j++) {
+                    int x = flipX ? model.getLength() - 1 - j : j;
+                    int y = flipX ? model.getLength() - 1 - i : i;
+
+                    add(boardElements[x][y]);
+                }
+
+            }
+
         }
 
     @Override
@@ -113,9 +116,7 @@ public class BoardView extends JPanel implements Observer{
         this.flipX = flipX;
     }
 
-    public void setFlipY(boolean flipY) {
-        this.flipY = flipY;
-    }
+
 
     public boolean isFlipX() {
         return flipX;
