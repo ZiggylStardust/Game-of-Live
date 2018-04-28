@@ -5,18 +5,30 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class to show the Gamefield
+ * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @Version: 1.0
+ * @Date: 27/04/18
+ */
 public class BoardView extends JPanel implements Observer{
-    private GameOfLife model;
+    private GameOfLife model;       //Refernces to the game and view
     private ViewGame viewGame;
-    private JButton boardElements[][];
+    private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
+    boolean flipX=false;               //false is normal, 1 is flipped
+    private boolean flipY=false;
+
+    /**
+     *
+     * @param model The gamemodel
+     * @param viewGame The window
+     */
     public BoardView(GameOfLife model, ViewGame viewGame) {
         this.model = model;
         this.viewGame=viewGame;
-        System.out.println(model.getHeight());
-        this.setLayout(new GridLayout(model.getLength(), model.getHeight()));
+        this.setLayout(new GridLayout(model.getHeight(), model.getLength()));       //Layout of Buttons
         initializeBoard();
-
         updateBoard();
     }
 
@@ -29,9 +41,9 @@ public class BoardView extends JPanel implements Observer{
                 boardElements[j][i] = new JButton();
                 add(boardElements[j][i]);
                 boardElements[j][i].addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        if(viewGame.isPaint){
-                            model.reanimateCell(x,y);
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {       //Painting hy passing over buttons
+                        if(viewGame.passBoolean.isPaint){                           //If isPaint is true
+                            model.reanimateCell(x,y);                               //reanimate passed over cell
                             boardElements[x][y].setBackground(viewGame.getAlive());
 
                         }
@@ -39,11 +51,11 @@ public class BoardView extends JPanel implements Observer{
             });
                 boardElements[j][i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if(viewGame.isSet){
+                        if(viewGame.passBoolean.isSet){         //setting cell to alive
                             model.reanimateCell(x,y);
                             boardElements[x][y].setBackground(viewGame.getAlive());
                         }
-                        if(viewGame.isFigure){
+                        if(viewGame.isFigure){                  //Setting Figure to the clicked cell
                             model.addFigure(x,y,viewGame.getFigure());
                         }
                     }
@@ -52,29 +64,71 @@ public class BoardView extends JPanel implements Observer{
         }
     }
 
+    /**
+     * Update board methode, checks the array of cells and recolors the buttons accordingly
+     */
     private void updateBoard() {
-        if (!viewGame.flip) {
+        int xflip = flipX ? (model.getLength() - 1) : 0;
+        int yflip = flipY ? (model.getHeight() - 1) : 0;
             for (int i = 0; i < model.getHeight(); i++) {
                 for (int j = 0; j < model.getLength(); j++) {
                     boolean modelElement = model.fields[j][i];
-                    JButton boardElement = viewGame.flip
-                            ? boardElements[model.getLength() - 1 - j][i]
-                            : boardElements[j][i];
+                    int x = flipX ? model.getLength() - 1 - j : j;
+                    int y = flipX ? model.getLength() - 1 - i : i;
 
                     if (modelElement) {
-                        boardElement.setBackground(viewGame.getAlive());
+                        boardElements[x][j].setBackground(viewGame.getAlive());
                     } else {
-                        boardElement.setBackground(viewGame.getDead());
+                        boardElements[x][y].setBackground(viewGame.getDead());
                     }
                 }
-            }
+
+
+
         }
-    }
+        System.out.println();
+        }
+
+        public void remapButtons() {
+            final int xflip = flipX ? (model.getLength() - 1) : 0;
+            final int yflip = flipY ? (model.getHeight() - 1) : 0;
+            for (int i = 0; i < (flipY ? model.getHeight() / 2 : model.getHeight()); i++) {
+                for (int j = 0; j < (flipX ? model.getLength() / 2 : model.getLength()); j++) {
+                    switchArray(j, i, Math.abs(xflip - j), Math.abs(yflip - i));
+
+                }
+                System.out.println();
+
+        }
+        }
 
     @Override
     public void update(Observable o, Object arg) {
         if(o == model) {
             updateBoard();
         }
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
+    }
+
+    public void setFlipY(boolean flipY) {
+        this.flipY = flipY;
+    }
+
+    public boolean isFlipX() {
+        return flipX;
+    }
+
+    public boolean isFlipY() {
+        return flipY;
+    }
+    private void switchArray(int a, int b, int c, int d){
+        String temp;
+        temp=boardElements[a][b].getActionCommand();
+        boardElements[a][b].setActionCommand(boardElements[c][d].getActionCommand());
+        boardElements[c][d].setActionCommand(temp);
+
     }
 }

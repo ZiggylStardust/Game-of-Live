@@ -2,7 +2,9 @@ import java.util.Observable;
 
 /**
  * Game of Live Main logic class
- *
+ * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @Version: 1.0
+ * @Date: 27/04/18
  */
 public class GameOfLife extends Observable {
     UpdateThread thread = new UpdateThread(this);
@@ -66,8 +68,8 @@ public class GameOfLife extends Observable {
     public void updateFeld() {
 
         boolean[][] tempFeld = new boolean[getLength()][getHeight()];
-        for (int y = 0; y < getLength(); y++) {
-            for (int x = 0; x < getHeight(); x++) {
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getLength(); x++) {
             tempFeld[x][y]=checkSurrounding(x,y);
             }
         }
@@ -142,7 +144,7 @@ public class GameOfLife extends Observable {
      * Setzte fields zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
      */
     public void resetFeld(){
-        fields =new boolean[getLength()][getHeight()];
+        setFields(new boolean[getLength()][getHeight()])
     }
     public int getHeight(){
         return fields[0].length;
