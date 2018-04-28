@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 /**
  * Window that gives option to enter the size of a new game
@@ -37,10 +38,11 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
     /**
      * start methode, called to create a new game
      */
-    public  static void start(){
+    public void start() throws PropertyVetoException {
         GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
         ViewGame viewGame = new ViewGame(AnzeigeFlaeche.desktop, game);
         AnzeigeFlaeche.desktop.addChild (viewGame, 10, 10); // Ein Kindfenster einfuegen
+        this.setClosed(true);
     }
 
     @Override
@@ -55,7 +57,11 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
                     y=Integer.parseInt(ySize.getText());
                 }
                 if(y>0&&x>0){                               //checks if positive numbers where entered
-                    start();
+                    try {
+                        start();
+                    } catch (PropertyVetoException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 break;
             }

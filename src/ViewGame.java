@@ -29,7 +29,7 @@ public class ViewGame extends JInternalFrame implements ActionListener{
             new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
     JMenuItem[] items ={new JMenuItem("Run/Pause"),new JMenuItem("Set"),new JMenuItem("Paint"),
             new JMenuItem("Fast"),new JMenuItem("Medium"),new JMenuItem("Slow"),
-            new JMenuItem("new Window"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
+            new JMenuItem("new View"),new JMenuItem("new Game"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
     /**
@@ -97,9 +97,14 @@ public class ViewGame extends JInternalFrame implements ActionListener{
                 game.setSpeed(2000);
                 break;
             }
-            case "new Window":{                         //opens new window
+            case "new View":{                         //opens new window
                 ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game); //passes refernce to thread and the boolean values
                 AnzeigeFlaeche.desktop.addChild (viewGame1, xpos+=20, ypos+=20);
+                break;
+            }
+            case "new Game":{                         //opens new window
+                StartGameWindow sgw=new StartGameWindow(AnzeigeFlaeche.desk);      //Creates a Stargame Window
+                AnzeigeFlaeche.desktop.addChild (sgw, 10, 10); // Ein Kindfenster einfuegen
                 break;
             }
             case "Change Color Alive": {                            //changes color of living Cells
