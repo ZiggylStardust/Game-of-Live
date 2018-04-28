@@ -16,7 +16,7 @@ public class BoardView extends JPanel implements Observer{
     private ViewGame viewGame;
     private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
-    boolean flipX=false;               //false is normal, 1 is flipped
+    boolean flipX=false;               //false is normal, true is flipped
     boolean flipY=false;
 
     /**
@@ -68,6 +68,7 @@ public class BoardView extends JPanel implements Observer{
      * Update board methode, checks the array of cells and recolors the buttons accordingly
      */
     private void updateBoard() {
+        System.out.println(flipX);
             for (int i = 0; i < model.getHeight(); i++) {
                 for (int j = 0; j < model.getLength(); j++) {
                     boolean modelElement = model.fields[j][i];
@@ -80,15 +81,12 @@ public class BoardView extends JPanel implements Observer{
                         boardElements[x][y].setBackground(viewGame.getDead());
                     }
                 }
-
-
-
-        }
-        System.out.println();
+            }
         }
 
         //TODO: make it so that buttons change after flipping
         public void remapButtons() {
+            System.out.println(flipX);
             for (int i = 0; i < (model.getHeight()); i++) {
                 for (int j = 0; j < (model.getLength()); j++) {
                 remove(boardElements[j][i]);

@@ -46,9 +46,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
 
-        boardView = new BoardView(game, this);
-        add(boardView);
-        game.addObserver(boardView);
+
 
         setJMenuBar (menuBar);
         setVisible(true);
@@ -108,8 +106,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             case "FlipX":{                                       //flips on the y axis (left is right)
                 boardView.flipX=!boardView.flipX;
                 boardView.remapButtons();
-
-
                 break;
 
             }
