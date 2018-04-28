@@ -44,7 +44,7 @@ public class BoardView extends JPanel implements Observer {
                 boardElements[x][y].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {       //Painting hy passing over buttons
                         if (model.isPaint) {                           //If isPaint is true
-                           toggleCell(xPos, yPos);                          //reanimate passed over cell
+                           setCell(xPos, yPos, true);                          //reanimate passed over cell
                         }
                     }
                 });
