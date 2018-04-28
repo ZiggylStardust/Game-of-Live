@@ -56,8 +56,8 @@ public class GameOfLife extends Observable {
     }
 
     private void setFields(boolean[][] fields) {
-        for (int y = 0; y < getLength(); y++) {
-            for (int x = 0; x < getHeight(); x++) {
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getLength(); x++) {
                 if(this.fields[x][y] != fields[x][y]) {
                     this.fields[x][y] = fields[x][y];
                 }

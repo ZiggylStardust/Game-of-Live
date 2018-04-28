@@ -64,13 +64,13 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }
             case "Set":{                               //enables the option to set cells to alive
-                game.isRun=false;               //pauses the game while setting
+                //game.isRun=false;               //pauses the game while setting
                 game.isSet=true;
                 isFigure=false;                        //disables setting figures
                 break;
             }
             case "Paint":{                                 //enables paint
-                game.isRun=false;
+                //game.isRun=false;
                 game.isPaint=true;
                 isFigure=false;
                 break;
@@ -104,14 +104,15 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 dead=JColorChooser.showDialog(this,"Select dead color",Color.GREEN);
                 break;
             }
-            case "FlipX":{                                       //flips on the y axis (left is right)
-                boardView.flipX=!boardView.flipX;
+            case "FlipX":{
+                //flips on the y axis (left is right)
+                boardView.setFlipX(!boardView.isFlipX());
                 //boardView.remapButtons();
                 break;
 
             }
             case "FlipY":{                                       //flips on the y axis (left is right)
-                boardView.flipY=!boardView.flipY;
+                boardView.setFlipY(!boardView.isFlipY());
                 //boardView.remapButtons();
                 break;
             }    //set figures on grid

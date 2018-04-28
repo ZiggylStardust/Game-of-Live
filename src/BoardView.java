@@ -16,8 +16,8 @@ public class BoardView extends JPanel implements Observer {
     private ViewGame viewGame;
     private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
-    boolean flipX = false;               //false is normal, true is flipped
-    boolean flipY = false;
+    private boolean flipX = false;               //false is normal, true is flipped
+    private boolean flipY = false;
 
     /**
      * @param model    The gamemodel
@@ -65,8 +65,8 @@ public class BoardView extends JPanel implements Observer {
      */
     private void updateBoard() {
         //System.out.println(flipX);
-        for (int i = 0; i < model.getHeight(); i++) {
-            for (int j = 0; j < model.getLength(); j++) {
+        for (int i = 0; i < model.getLength(); i++) {
+            for (int j = 0; j < model.getHeight(); j++) {
                 boolean modelElement = getCell(i, j);
 
                 if (modelElement) {
@@ -93,6 +93,24 @@ public class BoardView extends JPanel implements Observer {
     }
     private int getCellY(int y) {
         return flipX ? model.getHeight() - 1 - y : y;
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
+        updateBoard();
+    }
+
+    public boolean isFlipX() {
+        return flipX;
+    }
+
+    public boolean isFlipY() {
+        return flipY;
+    }
+
+    public void setFlipY(boolean flipY) {
+        this.flipY = flipY;
+        updateBoard();
     }
 
     @Override
