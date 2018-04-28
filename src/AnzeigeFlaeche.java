@@ -9,7 +9,6 @@ import javax.swing.*;
 public class AnzeigeFlaeche extends JFrame{
     private static JDesktopPane desk;
     static AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
-    GameOfLife game = new GameOfLife(32, 32,Konstruktionen.GLEITER);
     ViewGame viewGame1;
 
     public AnzeigeFlaeche(){
@@ -20,8 +19,7 @@ public class AnzeigeFlaeche extends JFrame{
         setSize(960,1080 ); setLocation(0, 0);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);Ok
 
-        viewGame1 = new ViewGame(desktop, game);
-        addChild (viewGame1, 10, 10);
+
         setTitle("Game Of Life");
         setVisible(true);
     }

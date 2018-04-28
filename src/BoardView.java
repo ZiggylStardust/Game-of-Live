@@ -112,24 +112,4 @@ public class BoardView extends JPanel implements Observer{
         }
     }
 
-    public void setFlipX(boolean flipX) {
-        this.flipX = flipX;
-    }
-
-
-
-    public boolean isFlipX() {
-        return flipX;
-    }
-
-    public boolean isFlipY() {
-        return flipY;
-    }
-    private void switchArray(int a, int b, int c, int d){
-        String temp;
-        temp=boardElements[a][b].getActionCommand();
-        boardElements[a][b].setActionCommand(boardElements[c][d].getActionCommand());
-        boardElements[c][d].setActionCommand(temp);
-
-    }
 }

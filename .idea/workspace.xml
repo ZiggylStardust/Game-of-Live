@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0756330-b5a5-4cc2-ba1b-dbd95e46dbfa" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/AnzeigeFlaeche.java" afterPath="$PROJECT_DIR$/src/AnzeigeFlaeche.java" />
       <change beforePath="$PROJECT_DIR$/src/BoardView.java" afterPath="$PROJECT_DIR$/src/BoardView.java" />
-      <change beforePath="$PROJECT_DIR$/src/ViewGame.java" afterPath="$PROJECT_DIR$/src/ViewGame.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +55,8 @@
       <file leaf-file-name="AnzeigeFlaeche.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AnzeigeFlaeche.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-178">
-              <caret line="19" column="46" lean-forward="false" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+            <state relative-caret-position="322">
+              <caret line="33" column="68" lean-forward="true" selection-start-line="33" selection-start-column="68" selection-end-line="33" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -85,12 +84,9 @@
       <file leaf-file-name="BoardView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BoardView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2188">
-              <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-              <folding>
-                <element signature="e#4136#4137#0" expanded="true" />
-                <element signature="e#4170#4171#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="347">
+              <caret line="108" column="50" lean-forward="true" selection-start-line="108" selection-start-column="50" selection-end-line="108" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -149,12 +145,12 @@
         <option value="$PROJECT_DIR$/src/KonstruktionsFeld.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/View.java" />
-        <option value="$PROJECT_DIR$/src/AnzeigeFlaeche.java" />
         <option value="$PROJECT_DIR$/src/UpdateThread.java" />
         <option value="$PROJECT_DIR$/src/GameOfLife.java" />
-        <option value="$PROJECT_DIR$/src/BoardView.java" />
         <option value="$PROJECT_DIR$/src/PassBoolean.java" />
         <option value="$PROJECT_DIR$/src/ViewGame.java" />
+        <option value="$PROJECT_DIR$/src/AnzeigeFlaeche.java" />
+        <option value="$PROJECT_DIR$/src/BoardView.java" />
       </list>
     </option>
   </component>
@@ -518,7 +514,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524741751004</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Small bugfixes and added consistency">
+      <created>1524916255335</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1524916255335</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -602,7 +605,8 @@
     <MESSAGE value="added ActionListener for Menubar, TODO: Implement it" />
     <MESSAGE value="Implemented ActionListener, TODO: implement Actions" />
     <MESSAGE value="Added Mouselistener, TODO: finish it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Mouselistener, TODO: finish it" />
+    <MESSAGE value="Small bugfixes and added consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small bugfixes and added consistency" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -647,14 +651,6 @@
             <element signature="e#701#702#0" expanded="true" />
             <element signature="e#735#736#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AnzeigeFlaeche.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-178">
-          <caret line="19" column="46" lean-forward="false" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -704,14 +700,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AnzeigeFlaeche.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="33" column="68" lean-forward="true" selection-start-line="33" selection-start-column="68" selection-end-line="33" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/BoardView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2188">
-          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-          <folding>
-            <element signature="e#4136#4137#0" expanded="true" />
-            <element signature="e#4170#4171#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="347">
+          <caret line="108" column="50" lean-forward="true" selection-start-line="108" selection-start-column="50" selection-end-line="108" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>
