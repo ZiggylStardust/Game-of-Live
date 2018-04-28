@@ -51,9 +51,16 @@ public class BoardView extends JPanel implements Observer{
             });
                 boardElements[j][i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if(model.isSet){         //setting cell to alive
+                        if(model.isSet){//setting cell to alive
+                            if(!model.fields[x][y]){
                             model.reanimateCell(x,y);
                             boardElements[x][y].setBackground(viewGame.getAlive());
+                        }
+                        else{
+                                model.killCell(x,y);
+                                boardElements[x][y].setBackground(viewGame.getDead());
+
+                            }
                         }
                         if(viewGame.isFigure){                  //Setting Figure to the clicked cell
                             model.addFigure(x,y,viewGame.getFigure());

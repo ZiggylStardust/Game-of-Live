@@ -32,8 +32,9 @@ public class ViewGame extends JInternalFrame implements ActionListener {
      * Alterante Construktor
      * @param myView        refrence to ViewGame
      * @param game          reference to GameOfLife
-     * @param game   Reference to booleans
+     * @param game          Reference to booleans
      */
+
     public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
         super ("Game " + (++nr), true, true);
         this.myView=myView;

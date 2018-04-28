@@ -141,6 +141,14 @@ public class GameOfLife extends Observable {
     public void reanimateCell(int x, int y){
         setField(true, x, y);
     }
+    /**
+     * Tötet Zelle an position(x,y)
+     * @param x x Position
+     * @param y y Position
+     */
+    public void killCell(int x, int y){
+        setField(false, x, y);
+    }
 
     /**
      * Setzte fields zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
