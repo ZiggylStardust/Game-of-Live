@@ -72,7 +72,7 @@ public class BoardView extends JPanel implements Observer{
                 for (int j = 0; j < model.getLength(); j++) {
                     boolean modelElement = model.fields[j][i];
                     int x = flipX ? model.getLength() - 1 - j : j;
-                    int y = flipX ? model.getLength() - 1 - i : i;
+                    int y = flipY ? model.getLength() - 1 - i : i;
 
                     if (modelElement) {
                         boardElements[x][y].setBackground(viewGame.getAlive());
@@ -96,7 +96,7 @@ public class BoardView extends JPanel implements Observer{
         }for (int i = 0; i < (model.getHeight()); i++) {
                 for (int j = 0; j < (model.getLength()); j++) {
                     int x = flipX ? model.getLength() - 1 - j : j;
-                    int y = flipX ? model.getLength() - 1 - i : i;
+                    int y = flipY ? model.getLength() - 1 - i : i;
 
                     add(boardElements[x][y]);
                 }
