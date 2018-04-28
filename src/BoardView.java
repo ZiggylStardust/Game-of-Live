@@ -65,14 +65,14 @@ public class BoardView extends JPanel implements Observer {
      */
     private void updateBoard() {
         //System.out.println(flipX);
-        for (int i = 0; i < model.getHeight(); i++) {
-            for (int j = 0; j < model.getLength(); j++) {
-                boolean modelElement = getCell(i, j);
+        for (int y = 0; y < model.getHeight(); y++) {
+            for (int x = 0; x < model.getLength(); x++) {
+                boolean modelElement = getCell(x, y);
 
                 if (modelElement) {
-                    boardElements[i][j].setBackground(viewGame.getAlive());
+                    boardElements[x][y].setBackground(viewGame.getAlive());
                 } else {
-                    boardElements[i][j].setBackground(viewGame.getDead());
+                    boardElements[x][y].setBackground(viewGame.getDead());
                 }
             }
         }
