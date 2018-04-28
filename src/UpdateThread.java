@@ -6,7 +6,8 @@
  */
 public class UpdateThread extends Thread {
     public int speed=500;      //wait between update in miliseconds
-    public GameOfLife game;
+    public GameOfLife game;     //refernce to the game it's connected to
+
     public UpdateThread(GameOfLife game){
         this.game=game;
     }

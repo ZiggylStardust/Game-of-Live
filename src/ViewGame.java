@@ -21,7 +21,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
     private GameOfLife game;
     JMenuBar menuBar = new JMenuBar();
-    JMenu[] menus = { new JMenu("Modus"), // Array mit 3 Menues
+    JMenu[] menus = { new JMenu("Modus"),
             new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
     JMenuItem[] items ={new JMenuItem("Run/Pause"),new JMenuItem("Set"),new JMenuItem("Paint"),
             new JMenuItem("Fast"),new JMenuItem("Medium"),new JMenuItem("Slow"),
@@ -29,10 +29,9 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
     /**
-     * Alterante Construktor
+     *  Construktor
      * @param myView        refrence to ViewGame
      * @param game          reference to GameOfLife
-     * @param game          Reference to booleans
      */
 
     public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
@@ -59,7 +58,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
             case "Run/Pause":{                      //pauses or starts the game
                 game.isRun=!game.isRun;
-                game.isPaint=false;
+                game.isPaint=false;                 //disables paint and set when game runs, viable for change
                 game.isSet=false;
                 break;
             }
@@ -106,16 +105,14 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             }
             case "FlipX":{                                       //flips on the y axis (left is right)
                 boardView.flipX=!boardView.flipX;
-                //boardView.remapButtons();
                 break;
 
             }
             case "FlipY":{                                       //flips on the y axis (left is right)
                 boardView.flipY=!boardView.flipY;
-                //boardView.remapButtons();
                 break;
-            }    //set figures on grid
-            case "Glider":
+            }
+            case "Glider":                                         //set figures on grid
                 game.isPaint=false;
                 game.isSet=false;
                 isFigure=true;
@@ -159,6 +156,10 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         return figure;
     }
 
+    /**
+     * sets boardview, necesarry because BardView uses ViewGame in it's construktor
+     * @param boardView The BoardView to be set
+     */
     public void setBoardView(BoardView boardView) {
         this.boardView = boardView;
     }
