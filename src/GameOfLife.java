@@ -5,7 +5,9 @@ import java.util.Observable;
  *
  */
 public class GameOfLife extends Observable {
+    UpdateThread thread = new UpdateThread(this);
     public boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
+    public boolean isRun;
 
     /**
      * Construktor, setzte größe des Feldes
@@ -33,6 +35,8 @@ public class GameOfLife extends Observable {
                 }
             }
         }
+
+        thread.start();
     }
 
     private void setField(boolean value, int x, int y) {
@@ -159,6 +163,10 @@ public class GameOfLife extends Observable {
             }
         setChanged();
         notifyObservers();
+    }
+
+    public void setSpeed(int speed) {
+        thread.setSpeed(speed);
     }
 }
 

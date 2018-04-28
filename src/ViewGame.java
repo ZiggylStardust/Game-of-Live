@@ -1,24 +1,22 @@
-import javafx.beans.Observable;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observer;
 
 public class ViewGame extends JInternalFrame implements ActionListener {
     static int nr = 0, xpos = 30, ypos = 30;
-    AnzeigeFlaeche myView;
+    AnzeigeFlaeche desktop;
     boolean isPaint=false;
     boolean isSet=false;
-    boolean isRun=false;
+    // boolean isRun=false;
     private Color dead=Color.GREEN;
     private Color alive=Color.RED;
     boolean isFigure=false;
     boolean [][] figure={{false}};
     boolean flip=false;
+    BoardView boardView;
 
-    UpdateThread thread;
+
     private GameOfLife game;
     JMenuBar menuBar = new JMenuBar();
     JMenu[] menus = { new JMenu("Modus"), // Array mit 3 Menues
@@ -28,21 +26,23 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             new JMenuItem("new Window"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("Flip"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
-    public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
+    public ViewGame(AnzeigeFlaeche desktop, GameOfLife game){
         super ("Game " + (++nr), true, true);
-        this.myView=myView;
-        this.game=game;
-        thread = new UpdateThread(game, this);
+        this.desktop = desktop;
+        this.game = game;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
         }
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
+
+        boardView = new BoardView(game, this);
+        add(boardView);
+        game.addObserver(boardView);
+
         setJMenuBar (menuBar);
         setVisible(true);
-
-
     }
 
     @Override
@@ -50,32 +50,32 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         switch (e.getActionCommand().toString()){
 
             case "Run/Pause":{
-                isRun=!isRun;
+                game.isRun=! game.isRun;
                 isPaint=false;
                 isSet=false;
-                new Thread(thread).start();
                 break;
             }
             case "Set":{
-                isRun=false;
+                game.isRun=false;
                 isSet=true;
                     break;
             }
             case "Paint":{
-                isRun=false;
+                game.isRun=false;
                 isPaint=true;
                 break;
             }
             case "Fast":{
-                thread.setSpeed(100);
+                game.setSpeed(100);
                 break;
             }
             case "Medium":{
-                thread.setSpeed(1000);
+                game.setSpeed(1000);
                 break;
             }
             case "Slow":{
-                thread.setSpeed(2000);
+                game.setSpeed(2000);
+                break;
             }
             case "new Window":{
                 ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
