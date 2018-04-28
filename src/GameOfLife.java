@@ -1,4 +1,5 @@
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Game of Live Main logic class
@@ -10,6 +11,7 @@ public class GameOfLife extends Observable {
     public boolean isRun=false;         // checks if game is suposed to be paused
     public boolean isPaint =false;
     public boolean isSet=false;
+    private Boolean isDone = false;
     UpdateThread thread = new UpdateThread(this);
     private boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
 
@@ -192,6 +194,19 @@ public class GameOfLife extends Observable {
      */
     public void setSpeed(int speed) {
         thread.setSpeed(speed);
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    @Override
+    public synchronized void deleteObserver(Observer o) {
+        super.deleteObserver(o);
+        System.out.println(countObservers());
+        if(countObservers() == 0) {
+            thread.stop();
+        }
     }
 }
 

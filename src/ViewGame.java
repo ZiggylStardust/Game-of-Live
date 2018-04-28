@@ -1,7 +1,11 @@
 import javax.swing.*;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static javax.swing.event.InternalFrameEvent.INTERNAL_FRAME_CLOSING;
 
 /**
  * Class represts Window in which a version of the game runs
@@ -9,7 +13,7 @@ import java.awt.event.ActionListener;
  * @Version: 1.0
  * @Date: 27/04/18
  */
-public class ViewGame extends JInternalFrame implements ActionListener {
+public class ViewGame extends JInternalFrame implements ActionListener{
     static int nr = 0, xpos = 30, ypos = 30;
     AnzeigeFlaeche myView;
     private Color dead=Color.GREEN;                 //saves the colors
@@ -38,7 +42,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         super ("Game " + (++nr), true, true);
         this.myView=myView;
         this.game=game;
-        this.game=game;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<11)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
@@ -46,7 +49,15 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
             menuBar.add (menus[i]); // fuege ein in Menue-Leiste
 
+        addInternalFrameListener(new InternalFrameCloseListener() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                game.deleteObserver(boardView);
+            }
+        });
 
+        boardView = new BoardView(game, this);
+        add(boardView);
 
         setJMenuBar (menuBar);
         setVisible(true);
@@ -54,7 +65,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand().toString()){
+        switch (e.getActionCommand()){
 
             case "Run/Pause":{                      //pauses or starts the game
                 game.isRun=!game.isRun;
@@ -88,10 +99,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             }
             case "new Window":{                         //opens new window
                 ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game); //passes refernce to thread and the boolean values
-                BoardView boardView1 = new BoardView(game, viewGame1);
-                viewGame1.setBoardView(boardView1);
-                viewGame1.add(boardView1);
-                game.addObserver(boardView1);
                 AnzeigeFlaeche.desktop.addChild (viewGame1, xpos+=20, ypos+=20);
                 break;
             }
@@ -104,12 +111,12 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }
             case "FlipX":{                                       //flips on the y axis (left is right)
-                boardView.flipX=!boardView.flipX;
+                boardView.setFlipX(!boardView.isFlipX());
                 break;
 
             }
             case "FlipY":{                                       //flips on the y axis (left is right)
-                boardView.flipY=!boardView.flipY;
+                boardView.setFlipY(!boardView.isFlipY());
                 break;
             }
             case "Glider":                                         //set figures on grid
@@ -140,7 +147,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }
             case "Clear":{game.resetFeld(); break;}         //clears game, kills all cells
-
         }
     }
 
@@ -154,13 +160,5 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
     public boolean[][] getFigure() {
         return figure;
-    }
-
-    /**
-     * sets boardview, necesarry because BardView uses ViewGame in it's construktor
-     * @param boardView The BoardView to be set
-     */
-    public void setBoardView(BoardView boardView) {
-        this.boardView = boardView;
     }
 }

@@ -32,7 +32,6 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
         this.add(startGame);
         setVisible(true);
         this.setDefaultCloseOperation (JInternalFrame.DISPOSE_ON_CLOSE);
-
     }
 
     /**
@@ -41,9 +40,6 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
     public  static void start(){
         GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
         ViewGame viewGame = new ViewGame(AnzeigeFlaeche.desktop, game);
-        BoardView boardView = new BoardView(game, viewGame);
-        viewGame.setBoardView(boardView);
-        viewGame.add(boardView);
         AnzeigeFlaeche.desktop.addChild (viewGame, 10, 10); // Ein Kindfenster einfuegen
     }
 

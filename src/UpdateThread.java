@@ -1,3 +1,6 @@
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Thread class, used to update the game
  * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
@@ -14,7 +17,7 @@ public class UpdateThread extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (!game.isDone()) {
             if (game.isRun) {
                 game.updateFeld();
             }
