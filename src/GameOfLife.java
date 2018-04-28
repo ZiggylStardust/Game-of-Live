@@ -7,9 +7,11 @@ import java.util.Observable;
  * @Date: 27/04/18
  */
 public class GameOfLife extends Observable {
+    public boolean isRun=false;         // checks if game is suposed to be paused
+    public boolean isPaint =false;
+    public boolean isSet=false;
     UpdateThread thread = new UpdateThread(this);
     public boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
-    public boolean isRun;
 
     /**
      * Construktor, setzte größe des Feldes
@@ -144,7 +146,7 @@ public class GameOfLife extends Observable {
      * Setzte fields zurück auf alles Tod, daher alles false, indem man es durch neues Array ersetzt (default boolean ist false)
      */
     public void resetFeld(){
-        setFields(new boolean[getLength()][getHeight()])
+        setFields(new boolean[getLength()][getHeight()]);
     }
     public int getHeight(){
         return fields[0].length;

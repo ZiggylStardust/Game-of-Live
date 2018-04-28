@@ -12,12 +12,10 @@ import java.awt.event.ActionListener;
 public class ViewGame extends JInternalFrame implements ActionListener {
     static int nr = 0, xpos = 30, ypos = 30;
     AnzeigeFlaeche myView;
-    PassBoolean passBoolean=new PassBoolean();      //saves the boolean values
     private Color dead=Color.GREEN;                 //saves the colors
     private Color alive=Color.RED;
     boolean isFigure=false;                         //is a figure being set
     boolean [][] figure={{false}};                  //saves figure
-    boolean flip=false;                             //boolean to check if Board is being flipped
     private BoardView boardView;
 
 
@@ -30,33 +28,18 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             new JMenuItem("new Window"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
-    public ViewGame(AnzeigeFlaeche desktop, GameOfLife game){
-        super ("Game " + (++nr), true, true);
-        this.desktop = desktop;
-        this.game = game;
-        for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
-            menus[(i<3)?0:(i<6)?1:(i<11)?2:3].add(items[i]); // add Items in Menue 0|1|2
-            items[i].addActionListener(this);
-        }
-        for (int i = 0; i < menus.length; i++) // fuer alle Menues:
-            menuBar.add (menus[i]); // fuege ein in Menue-Leiste
-        setJMenuBar (menuBar);
-        setVisible(true);
-    }
-
     /**
      * Alterante Construktor
      * @param myView        refrence to ViewGame
      * @param game          reference to GameOfLife
-     * @param passBoolean   Reference to booleans
+     * @param game   Reference to booleans
      * @param thread        reference to Thread
      */
-    public ViewGame(AnzeigeFlaeche myView, GameOfLife game, PassBoolean passBoolean,UpdateThread thread){
+    public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
         super ("Game " + (++nr), true, true);
         this.myView=myView;
-        this.passBoolean=passBoolean;
         this.game=game;
-        this.thread=thread;
+        this.game=game;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
             menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
@@ -70,8 +53,6 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
         setJMenuBar (menuBar);
         setVisible(true);
-
-
     }
 
     @Override
@@ -79,21 +60,20 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         switch (e.getActionCommand().toString()){
 
             case "Run/Pause":{                      //pauses or starts the game
-                passBoolean.isRun=!passBoolean.isRun;
-                passBoolean.isPaint=false;
-                passBoolean.isSet=false;
-                new Thread(thread).start();
+                game.isRun=!game.isRun;
+                game.isPaint=false;
+                game.isSet=false;
                 break;
             }
             case "Set":{                               //enables the option to set cells to alive
-                passBoolean.isRun=false;               //pauses the game while setting
-                passBoolean.isSet=true;
+                game.isRun=false;               //pauses the game while setting
+                game.isSet=true;
                 isFigure=false;                        //disables setting figures
                 break;
             }
             case "Paint":{                                 //enables paint
-                passBoolean.isRun=false;
-                passBoolean.isPaint=true;
+                game.isRun=false;
+                game.isPaint=true;
                 isFigure=false;
                 break;
             }
@@ -110,7 +90,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }
             case "new Window":{                         //opens new window
-                ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game,passBoolean,thread); //passes refernce to thread and the boolean values
+                ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game); //passes refernce to thread and the boolean values
                 BoardView boardView1 = new BoardView(game, viewGame1);
                 viewGame1.add(boardView1);
                 game.addObserver(boardView1);
@@ -141,28 +121,28 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 break;
             }    //set figures on grid
             case "Glider":
-                passBoolean.isPaint=false;
-                passBoolean.isSet=false;
+                game.isPaint=false;
+                game.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.GLEITER);
                 break;
             case "f-Pentomino":{
-                passBoolean.isPaint=false;
-                passBoolean.isSet=false;
+                game.isPaint=false;
+                game.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.F_PENTOMINO);
                 break;
                 }
             case "Blinker":{
-                passBoolean.isPaint=false;
-                passBoolean.isSet=false;
+                game.isPaint=false;
+                game.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.BLINKER);
                 break;
             }
             case "Biploe":{
-                passBoolean.isPaint=false;
-                passBoolean.isSet=false;
+                game.isPaint=false;
+                game.isSet=false;
                 isFigure=true;
                 figure=KonstruktionsFeld.getForm(Konstruktionen.BIPLOE);
                 break;

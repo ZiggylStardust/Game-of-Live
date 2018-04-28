@@ -18,7 +18,7 @@ public class AnzeigeFlaeche extends JFrame{
         setContentPane (desk); // als neue ContentPane
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960,1080 ); setLocation(0, 0);
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);Ok
 
         viewGame1 = new ViewGame(desktop, game);
         addChild (viewGame1, 10, 10);

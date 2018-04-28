@@ -10,13 +10,11 @@ public class UpdateThread extends Thread {
     public UpdateThread(GameOfLife game){
         this.game=game;
     }
+
     @Override
     public void run() {
-        while(view.passBoolean.isRun) {
-            game.updateFeld();
-        System.out.println("test");
-        while(true) {
-            if(game.isRun) {
+        while (true) {
+            if (game.isRun) {
                 game.updateFeld();
             }
             try {
