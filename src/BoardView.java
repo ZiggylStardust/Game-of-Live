@@ -87,6 +87,7 @@ public class BoardView extends JPanel implements Observer{
         System.out.println();
         }
 
+        //TODO: make it so that buttons change after flipping
         public void remapButtons() {
             for (int i = 0; i < (model.getHeight()); i++) {
                 for (int j = 0; j < (model.getLength()); j++) {

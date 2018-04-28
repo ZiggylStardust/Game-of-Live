@@ -91,6 +91,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             case "new Window":{                         //opens new window
                 ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game); //passes refernce to thread and the boolean values
                 BoardView boardView1 = new BoardView(game, viewGame1);
+                viewGame1.setBoardView(boardView1);
                 viewGame1.add(boardView1);
                 game.addObserver(boardView1);
                 AnzeigeFlaeche.desktop.addChild (viewGame1, xpos+=20, ypos+=20);
