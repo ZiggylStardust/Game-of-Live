@@ -16,6 +16,9 @@ public class BoardView extends JPanel implements Observer{
     private ViewGame viewGame;
     private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
+    boolean flipX=false;               //false is normal, 1 is flipped
+    private boolean flipY=false;
+
     /**
      *
      * @param model The gamemodel
@@ -68,37 +71,63 @@ public class BoardView extends JPanel implements Observer{
      * Update board methode, checks the array of cells and recolors the buttons accordingly
      */
     private void updateBoard() {
-        if(!viewGame.flip) {            //If game isn't flipped
+        int xflip=flipX?(model.getLength()-1):0;
+        int yflip=flipY?(model.getHeight()-1):0;
             for (int i = 0; i < model.getHeight(); i++) {
                 for (int j = 0; j < model.getLength(); j++) {
                     if (model.feld[j][i]) {
-                        boardElements[j][i].setBackground(viewGame.getAlive());
+                        boardElements[flipX?model.getLength()-1-j:j][flipY?model.getHeight()-1-i:i].setBackground(viewGame.getAlive());
                     } else {
-                        boardElements[j][i].setBackground(viewGame.getDead());
+                        boardElements[flipX?model.getLength()-1-j:j][flipY?model.getHeight()-1-i:i].setBackground(viewGame.getDead());
                     }
                 }
-            }
-        }
-        else{                           //If game is flipped
-            for (int i = 0; i < model.getHeight(); i++) {
-                for (int j = 0; j < model.getLength(); j++) {
 
-                    if (model.feld[j][i]) {
-                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getAlive());
-                    } else {
-                        boardElements[model.getLength()-1-j][i].setBackground(viewGame.getDead());
-                    }
+
+
+        }
+        System.out.println();
+        }
+
+        public void remapButtons() {
+            final int xflip = flipX ? (model.getLength() - 1) : 0;
+            final int yflip = flipY ? (model.getHeight() - 1) : 0;
+            for (int i = 0; i < (flipY ? model.getHeight() / 2 : model.getHeight()); i++) {
+                for (int j = 0; j < (flipX ? model.getLength() / 2 : model.getLength()); j++) {
+                    switchArray(j, i, Math.abs(xflip - j), Math.abs(yflip - i));
+
                 }
-            }
+                System.out.println();
+
         }
         }
-
-
 
     @Override
     public void update(Observable o, Object arg) {
         if(o == model) {
             updateBoard();
         }
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
+    }
+
+    public void setFlipY(boolean flipY) {
+        this.flipY = flipY;
+    }
+
+    public boolean isFlipX() {
+        return flipX;
+    }
+
+    public boolean isFlipY() {
+        return flipY;
+    }
+    private void switchArray(int a, int b, int c, int d){
+        String temp;
+        temp=boardElements[a][b].getActionCommand();
+        boardElements[a][b].setActionCommand(boardElements[c][d].getActionCommand());
+        boardElements[c][d].setActionCommand(temp);
+
     }
 }

@@ -42,6 +42,7 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
         GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
         ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
         BoardView boardView1 = new BoardView(game, viewGame1);
+        viewGame1.setBoardView(boardView1);
         viewGame1.add(boardView1);
         game.addObserver(boardView1);
         AnzeigeFlaeche.desktop.addChild (viewGame1, 10, 10); // Ein Kindfenster einfuegen

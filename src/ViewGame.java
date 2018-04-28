@@ -20,6 +20,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
     boolean isFigure=false;                         //is a figure being set
     boolean [][] figure={{false}};                  //saves figure
     boolean flip=false;                             //boolean to check if Board is being flipped
+    private BoardView boardView;
 
     UpdateThread thread;
     private GameOfLife game;
@@ -28,7 +29,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
     JMenuItem[] items ={new JMenuItem("Run/Pause"),new JMenuItem("Set"),new JMenuItem("Paint"),
             new JMenuItem("Fast"),new JMenuItem("Medium"),new JMenuItem("Slow"),
-            new JMenuItem("new Window"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("Flip"),
+            new JMenuItem("new Window"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
     public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
@@ -37,7 +38,7 @@ public class ViewGame extends JInternalFrame implements ActionListener {
         this.game=game;
         thread=new UpdateThread(game, this);
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
-            menus[(i<3)?0:(i<6)?1:(i<10)?2:3].add(items[i]); // add Items in Menue 0|1|2
+            menus[(i<3)?0:(i<6)?1:(i<11)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
         }
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
@@ -122,9 +123,21 @@ public class ViewGame extends JInternalFrame implements ActionListener {
                 dead=JColorChooser.showDialog(this,"Select dead color",Color.GREEN);
                 break;
             }
-            case "Flip":{                                       //flips on the y axis (left is right)
-                flip=!flip; break;
-            }                                                   //set figures on grid
+            case "FlipX":{                                       //flips on the y axis (left is right)
+                boardView.flipX=!boardView.flipX;
+                boardView.remapButtons();
+
+
+                break;
+
+            }
+            case "FlipY":{                                       //flips on the y axis (left is right)
+                boardView.setFlipY(!boardView.isFlipY());
+                boardView.remapButtons();
+
+
+                break;
+            }    //set figures on grid
             case "Glider":
                 passBoolean.isPaint=false;
                 passBoolean.isSet=false;
@@ -167,5 +180,9 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
     public boolean[][] getFigure() {
         return figure;
+    }
+
+    public void setBoardView(BoardView boardView) {
+        this.boardView = boardView;
     }
 }
