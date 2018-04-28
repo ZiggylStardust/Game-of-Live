@@ -9,7 +9,6 @@ import javax.swing.*;
 public class AnzeigeFlaeche extends JFrame{
     private static JDesktopPane desk;
     static AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
-    ViewGame viewGame1;
 
     public AnzeigeFlaeche(){
         desk = new JDesktopPane(); // neue DesktopPane

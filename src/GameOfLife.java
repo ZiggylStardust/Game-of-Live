@@ -11,7 +11,7 @@ public class GameOfLife extends Observable {
     public boolean isPaint =false;
     public boolean isSet=false;
     UpdateThread thread = new UpdateThread(this);
-    public boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
+    private boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
 
     /**
      * Construktor, setzte größe des Feldes
@@ -43,12 +43,16 @@ public class GameOfLife extends Observable {
         thread.start();
     }
 
-    private void setField(boolean value, int x, int y) {
+    public void setField(boolean value, int x, int y) {
         if(fields[x][y] != value) {
             fields[x][y] = value;
             setChanged();
             notifyObservers();
         }
+    }
+
+    public boolean getField(int x, int y) {
+        return fields[x][y];
     }
 
     private void setFields(boolean[][] fields) {

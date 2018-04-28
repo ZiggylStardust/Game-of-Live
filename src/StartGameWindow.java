@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
  */
 public class StartGameWindow extends JInternalFrame implements ActionListener{
     private JDesktopPane desk;
-    private JTextField xSize=new JTextField("Enter length (only Integer)"); //Textfield to enter the height and length
-    private JTextField ySize=new JTextField("Enter height (only Integer)");
+    private JTextField xSize=new JTextField("30"); //Textfield to enter the height and length
+    private JTextField ySize=new JTextField("30");
     private JButton startGame=new JButton("Start");                     //startbutton
     private static int x=0;
     private static int y=0;
@@ -40,17 +40,16 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
      */
     public  static void start(){
         GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
-        ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game);
-        BoardView boardView1 = new BoardView(game, viewGame1);
-        viewGame1.setBoardView(boardView1);
-        viewGame1.add(boardView1);
-        game.addObserver(boardView1);
-        AnzeigeFlaeche.desktop.addChild (viewGame1, 10, 10); // Ein Kindfenster einfuegen
+        ViewGame viewGame = new ViewGame(AnzeigeFlaeche.desktop, game);
+        BoardView boardView = new BoardView(game, viewGame);
+        viewGame.setBoardView(boardView);
+        viewGame.add(boardView);
+        AnzeigeFlaeche.desktop.addChild (viewGame, 10, 10); // Ein Kindfenster einfuegen
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand().toString()){
+        switch (e.getActionCommand()){
 
             case "Start":{
                 if(isNumeric(xSize.getText())) {            //checks if Text was an integer

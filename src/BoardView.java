@@ -11,22 +11,23 @@ import java.util.Observer;
  * @Version: 1.0
  * @Date: 27/04/18
  */
-public class BoardView extends JPanel implements Observer{
+public class BoardView extends JPanel implements Observer {
     private GameOfLife model;       //Refernces to the game and view
     private ViewGame viewGame;
     private JButton boardElements[][];  //Array of buttons, represents the gamefields
 
-    boolean flipX=false;               //false is normal, true is flipped
-    boolean flipY=false;
+    boolean flipX = false;               //false is normal, true is flipped
+    boolean flipY = false;
 
     /**
-     *
-     * @param model The gamemodel
+     * @param model    The gamemodel
      * @param viewGame The window
      */
     public BoardView(GameOfLife model, ViewGame viewGame) {
         this.model = model;
-        this.viewGame=viewGame;
+        this.viewGame = viewGame;
+        model.addObserver(this);
+
         this.setLayout(new GridLayout(model.getHeight(), model.getLength()));       //Layout of Buttons
         initializeBoard();
         updateBoard();
@@ -34,39 +35,27 @@ public class BoardView extends JPanel implements Observer{
 
     private void initializeBoard() {
         boardElements = new JButton[model.getLength()][model.getHeight()];
-        for(int i = 0; i < model.getHeight(); i++) {
-            for(int j = 0; j < model.getLength(); j++) {
-                final int x=j;
-                final int y=i;
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getLength(); j++) {
+                final int x = j;
+                final int y = i;
                 boardElements[j][i] = new JButton();
                 add(boardElements[j][i]);
                 boardElements[j][i].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {       //Painting hy passing over buttons
-                        if(model.isPaint){                           //If isPaint is true
-                            model.reanimateCell(x,y);                               //reanimate passed over cell
-                            boardElements[x][y].setBackground(viewGame.getAlive());
-
+                        if (model.isPaint) {                           //If isPaint is true
+                           toggleCell(x, y);                          //reanimate passed over cell
                         }
                     }
-            });
-                boardElements[j][i].addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if(model.isSet){//setting cell to alive
-                            if(!model.fields[x][y]){
-                            model.reanimateCell(x,y);
-                            boardElements[x][y].setBackground(viewGame.getAlive());
-                        }
-                        else{
-                                model.killCell(x,y);
-                                boardElements[x][y].setBackground(viewGame.getDead());
-
-                            }
-                        }
-                        if(viewGame.isFigure){                  //Setting Figure to the clicked cell
-                            model.addFigure(x,y,viewGame.getFigure());
-                        }
+                });
+                boardElements[j][i].addActionListener(e -> {
+                    if (model.isSet) {//setting cell to alive
+                        toggleCell(x, y);
                     }
-                } );
+                    if (viewGame.isFigure) {                  //Setting Figure to the clicked cell
+                        model.addFigure(getCellX(x), getCellY(y), viewGame.getFigure());
+                    }
+                });
             }
         }
     }
@@ -75,41 +64,36 @@ public class BoardView extends JPanel implements Observer{
      * Update board methode, checks the array of cells and recolors the buttons accordingly
      */
     private void updateBoard() {
-        System.out.println(flipX);
-            for (int i = 0; i < model.getHeight(); i++) {
-                for (int j = 0; j < model.getLength(); j++) {
-                    boolean modelElement = model.fields[j][i];
-                    int x = flipX ? model.getLength() - 1 - j : j;
-                    int y = flipY ? model.getLength() - 1 - i : i;
+        //System.out.println(flipX);
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getLength(); j++) {
+                boolean modelElement = getCell(i, j);
 
-                    if (modelElement) {
-                        boardElements[x][y].setBackground(viewGame.getAlive());
-                    } else {
-                        boardElements[x][y].setBackground(viewGame.getDead());
-                    }
+                if (modelElement) {
+                    boardElements[i][j].setBackground(viewGame.getAlive());
+                } else {
+                    boardElements[i][j].setBackground(viewGame.getDead());
                 }
             }
         }
+    }
 
-        //TODO: make it so that buttons change after flipping
-        public void remapButtons() {
-            System.out.println(flipX);
-            for (int i = 0; i < (model.getHeight()); i++) {
-                for (int j = 0; j < (model.getLength()); j++) {
-                remove(boardElements[j][i]);
-                }
 
-        }for (int i = 0; i < (model.getHeight()); i++) {
-                for (int j = 0; j < (model.getLength()); j++) {
-                    int x = flipX ? model.getLength() - 1 - j : j;
-                    int y = flipY ? model.getLength() - 1 - i : i;
-
-                    add(boardElements[x][y]);
-                }
-
-            }
-
-        }
+    private void toggleCell(int x, int y) {
+        setCell(x, y, !getCell(x, y));
+    }
+    private void setCell(int x, int y, boolean cell) {
+         model.setField(cell, getCellX(x), getCellY(y));
+    }
+    private boolean getCell(int x, int y) {
+        return model.getField(getCellX(x), (getCellY(y)));
+    }
+    private int getCellX(int x) {
+        return flipY ? model.getLength() - 1 - x : x;
+    }
+    private int getCellY(int y) {
+        return flipX ? model.getHeight() - 1 - y : y;
+    }
 
     @Override
     public void update(Observable o, Object arg) {

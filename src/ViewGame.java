@@ -106,15 +106,13 @@ public class ViewGame extends JInternalFrame implements ActionListener {
             }
             case "FlipX":{                                       //flips on the y axis (left is right)
                 boardView.flipX=!boardView.flipX;
-                boardView.remapButtons();
+                //boardView.remapButtons();
                 break;
 
             }
             case "FlipY":{                                       //flips on the y axis (left is right)
                 boardView.flipY=!boardView.flipY;
-                boardView.remapButtons();
-
-
+                //boardView.remapButtons();
                 break;
             }    //set figures on grid
             case "Glider":
