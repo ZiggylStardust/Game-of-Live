@@ -39,7 +39,7 @@ public class StartGameWindow extends JInternalFrame implements ActionListener{
      * start methode, called to create a new game
      */
     public void start() throws PropertyVetoException {
-        GameOfLife game = new GameOfLife(x, y,Konstruktionen.GLEITER);  //game created with Gleiter Figure
+        GameOfLife game = new GameOfLife(x, y, Construction.GLIDER);  //game created with Gleiter Figure
         ViewGame viewGame = new ViewGame(AnzeigeFlaeche.desktop, game);
         AnzeigeFlaeche.desktop.addChild (viewGame, 10, 10); // Ein Kindfenster einfuegen
         this.setClosed(true);

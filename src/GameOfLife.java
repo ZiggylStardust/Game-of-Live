@@ -16,24 +16,24 @@ public class GameOfLife extends Observable {
     private boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
 
     /**
-     * Construktor, setzte größe des Feldes
-     * @param x         Anzahl Zellen nach rechts
-     * @param y         Anzahl Zellen nach unten
+     * Construktor, sets size of game field
+     * @param x         Cells to the right
+     * @param y         Cells down
      */
     GameOfLife(int x, int y) {
         fields = new boolean[x][y];
     }
 
     /**
-     * Construktor, setzte größe des Feldes und man kann Muster initialisieren
-     * @param x         Anzahl Zellen nach rechts
-     * @param y         Anzahl Zellen nach unten
-     * @param muster    enum, das ein muster wiedergibt, welches Angezeigt wird
+     * Construktor, sets size of game field and initializes it with figure
+     * @param x         Cells to the right
+     * @param y         Cells down
+     * @param muster    enum, represents a figure to placed on the field
      */
 
-    GameOfLife(int x, int y, Konstruktionen muster){
+    GameOfLife(int x, int y, Construction muster){
         fields = new boolean[x][y];
-        boolean[][] figur=KonstruktionsFeld.getForm(muster);
+        boolean[][] figur= ConstructionField.getForm(muster);
         if(figur.length< getLength()&&figur[0].length< getHeight()){
             for(y=0;y<figur[0].length;y++){
                 for(x=0;x<figur.length;x++){
@@ -43,6 +43,22 @@ public class GameOfLife extends Observable {
         }
 
         thread.start();
+    }
+
+    /**
+     * Copy Constructor
+     * @param game  The game to be copied
+     */
+    public GameOfLife(GameOfLife game){
+        fields=new boolean[game.getLength()][game.getHeight()];
+        isRun=game.isRun;         // checks if game is suposed to be paused
+        isPaint =game.isPaint;
+        isSet=game.isSet;
+        isDone = game.isDone;
+        setFields(game.fields);
+        thread.start();
+        thread.setSpeed(game.thread.getSpeed());
+
     }
 
     /**
@@ -86,8 +102,7 @@ public class GameOfLife extends Observable {
     }
 
     /**
-     * Update das fields, durchs Array iterieren und auf jedes fields checkSurrounding anwenden, dann in neues Array kopieren
-     * und dann das alte mit diesem überschreiben
+     * updates the field by calculating the new state
      */
     public void updateFeld() {
 
@@ -102,16 +117,16 @@ public class GameOfLife extends Observable {
 
     /**
      *
-     * @param initial_x         x Position der Zelle (links rechts)
-     * @param initial_y         y Position der Zelle (oben unten)
-     * @return          Ist die Zelle lebendig ?(true =ja, false =nein)
+     * @param initial_x         x of the cell (left - right)
+     * @param initial_y         y position of cell(up - dwon)
+     * @return                  Is cell aliv?(true =yes, false =no)
      */
     public boolean checkSurrounding(int initial_x, int initial_y) {
         boolean cellsLives = false;     //return wert
-        int countOfLivingCells = 0;     // Anzahl der lebenden Zellen, die sie umgeben
-        for (int y = initial_y - 1; y <= initial_y + 1; y++) {       //über die 8 Zellen itereiren, die die Zelle be x,y umgibt
+        int countOfLivingCells = 0;     // number of surrounding living cells
+        for (int y = initial_y - 1; y <= initial_y + 1; y++) {      //iterates through the directly surrounding cells
             for (int x = initial_x - 1; x <= initial_x + 1; x++) {
-                int yPos = y;                       //Position der Zelle, die jetzt betrachtet wird (eine der Umgebenden Zellen)
+                int yPos = y;                       //position of currently looked at cell (one of the cells surrounding the initial cell
                 int xPos = x;
                 /**
                  * Überprüft, ob die Zelle auserhalb des Arrays liegt, wenn das Passiert, wird die gegüberliegnde Zelle betrachet
@@ -129,7 +144,7 @@ public class GameOfLife extends Observable {
                     if (yPos == getHeight()) {
                         yPos = 0;
                     }
-                    if (fields[xPos][yPos]) {         //Wenn die betrachtete Zelle lebendig ist, wird der Zähler erhöht
+                    if (fields[xPos][yPos]) {         //increases count if surrounding cell is alive
 
                         countOfLivingCells++;
                     }
@@ -138,18 +153,18 @@ public class GameOfLife extends Observable {
         }
 
         /**
-         * Implementierung der Regeln des Spiels
+         * Implements game rules
          */
-        if (!fields[initial_x][initial_y] && countOfLivingCells == 3) {   //bei genau 3 lebenden Zellen wird eine Tote Zelle wiederbelebt
+        if (!fields[initial_x][initial_y] && countOfLivingCells == 3) {   //exactly 3 living cells revive a dead cell
             cellsLives = true;
         }
-        if (countOfLivingCells < 2) {       //Bei Unter 2 umgebenden Zellen nstirbt sie
+        if (countOfLivingCells < 2) {       //at less than 2 living cells the cell dies
             cellsLives = false;
         }
-        if (fields[initial_x][initial_y] && countOfLivingCells >= 2) {        //Bei 2 oder 3 Zellen bleibt sie am Leben
+        if (fields[initial_x][initial_y] && countOfLivingCells >= 2) {        //at 2 or 3 cells the cell survives
             cellsLives = true;
         }
-        if (countOfLivingCells > 3) {                       //Bei über 3 Zellen stirbt sie
+        if (countOfLivingCells > 3) {                       //dies at over 3 living cells
             cellsLives = false;
         }
         return cellsLives;

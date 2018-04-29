@@ -1,11 +1,8 @@
 import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static javax.swing.event.InternalFrameEvent.INTERNAL_FRAME_CLOSING;
 
 /**
  * Class represts Window in which a version of the game runs
@@ -29,7 +26,8 @@ public class ViewGame extends JInternalFrame implements ActionListener{
             new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
     JMenuItem[] items ={new JMenuItem("Run/Pause"),new JMenuItem("Set"),new JMenuItem("Paint"),
             new JMenuItem("Fast"),new JMenuItem("Medium"),new JMenuItem("Slow"),
-            new JMenuItem("new View"),new JMenuItem("new Game"),new JMenuItem("Change Color Alive"),new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
+            new JMenuItem("new View"),new JMenuItem("new Game"),new JMenuItem("new Copy"),
+            new JMenuItem("Change Color Alive"), new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
     /**
@@ -43,7 +41,7 @@ public class ViewGame extends JInternalFrame implements ActionListener{
         this.myView=myView;
         this.game=game;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
-            menus[(i<3)?0:(i<7)?1:(i<12)?2:3].add(items[i]); // add Items in Menue 0|1|2
+            menus[(i<3)?0:(i<6)?1:(i<13)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
         }
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
@@ -61,6 +59,28 @@ public class ViewGame extends JInternalFrame implements ActionListener{
 
         setJMenuBar (menuBar);
         setVisible(true);
+    }
+
+    /**
+     * Copy Constructor
+     * @param viewGame
+     * @param game
+     */
+    public ViewGame(ViewGame viewGame, GameOfLife game){
+        this(viewGame.myView, game);
+        setDead(viewGame.getDead());
+        setAlive(viewGame.getAlive());
+        isFigure=viewGame.isFigure;
+        figure=new boolean[viewGame.figure[0].length][viewGame.figure.length];
+        for(int y=0;y<viewGame.figure[0].length;y++){
+            for(int x=0;x<viewGame.figure.length;x++){
+                figure[y][x]=viewGame.figure[x][y];
+            }
+        }
+
+
+
+
     }
 
     @Override
@@ -107,6 +127,13 @@ public class ViewGame extends JInternalFrame implements ActionListener{
                 AnzeigeFlaeche.desktop.addChild (sgw, 10, 10); // Ein Kindfenster einfuegen
                 break;
             }
+            case "new Copy":{                           //creates a identical independent copy of the current game in a new window
+                GameOfLife copyGame=new GameOfLife(game);
+                ViewGame copyViewGame = new ViewGame(this,copyGame);
+                AnzeigeFlaeche.desktop.addChild (copyViewGame, 10, 10);
+                break;
+            }
+
             case "Change Color Alive": {                            //changes color of living Cells
                 alive=JColorChooser.showDialog(this,"Select living color",Color.RED);
                 break;
@@ -128,32 +155,33 @@ public class ViewGame extends JInternalFrame implements ActionListener{
                 game.isPaint=false;
                 game.isSet=false;
                 isFigure=true;
-                figure=KonstruktionsFeld.getForm(Konstruktionen.GLEITER);
+                figure= ConstructionField.getForm(Construction.GLIDER);
                 break;
             case "f-Pentomino":{
                 game.isPaint=false;
                 game.isSet=false;
                 isFigure=true;
-                figure=KonstruktionsFeld.getForm(Konstruktionen.F_PENTOMINO);
+                figure= ConstructionField.getForm(Construction.F_PENTOMINO);
                 break;
                 }
             case "Blinker":{
                 game.isPaint=false;
                 game.isSet=false;
                 isFigure=true;
-                figure=KonstruktionsFeld.getForm(Konstruktionen.BLINKER);
+                figure= ConstructionField.getForm(Construction.BLINKER);
                 break;
             }
             case "Biploe":{
                 game.isPaint=false;
                 game.isSet=false;
                 isFigure=true;
-                figure=KonstruktionsFeld.getForm(Konstruktionen.BIPLOE);
+                figure= ConstructionField.getForm(Construction.BIPLOE);
                 break;
             }
             case "Clear":{game.resetFeld(); break;}         //clears game, kills all cells
         }
     }
+
 
     public Color getAlive() {
         return alive;
@@ -165,5 +193,13 @@ public class ViewGame extends JInternalFrame implements ActionListener{
 
     public boolean[][] getFigure() {
         return figure;
+    }
+
+    public void setAlive(Color alive) {
+        this.alive = alive;
+    }
+
+    public void setDead(Color dead) {
+        this.dead = dead;
     }
 }

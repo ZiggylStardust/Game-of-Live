@@ -49,11 +49,15 @@ public class BoardView extends JPanel implements Observer {
                     }
                 });
                 boardElements[x][y].addActionListener(e -> {
+
                     if (model.isSet) {//setting cell to alive
                         toggleCell(xPos, yPos);
                     }
                     if (viewGame.isFigure) {                  //Setting Figure to the clicked cell
                         model.addFigure(getCellX(xPos), getCellY(yPos), viewGame.getFigure());
+                    }
+                    if(!model.isSet&&!viewGame.isFigure){           //Cells can be set alive always, but only killed in Set Mode
+                        setCell(xPos,yPos,true);
                     }
                 });
             }
