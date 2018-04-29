@@ -22,12 +22,12 @@ public class ViewGame extends JInternalFrame implements ActionListener{
 
     private GameOfLife game;
     JMenuBar menuBar = new JMenuBar();
-    JMenu[] menus = { new JMenu("Modus"),
-            new JMenu("Speed"), new JMenu("Fenster") , new JMenu("Figur")};
+    JMenu[] menus = { new JMenu("Mode"),
+            new JMenu("Speed"), new JMenu("Window") , new JMenu("Figure")};
     JMenuItem[] items ={new JMenuItem("Run/Pause"),new JMenuItem("Set"),new JMenuItem("Paint"),
             new JMenuItem("Fast"),new JMenuItem("Medium"),new JMenuItem("Slow"),
             new JMenuItem("new View"),new JMenuItem("new Game"),new JMenuItem("new Copy"),
-            new JMenuItem("Change Color Alive"), new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"),
+            new JMenuItem("Change Color Alive"), new JMenuItem("Change Color Dead"), new JMenuItem("FlipX"), new JMenuItem("FlipY"), new JMenuItem("Rotate"),
             new JMenuItem("Glider"),new JMenuItem("f-Pentomino"),new JMenuItem("Blinker"), new JMenuItem("Biploe"), new JMenuItem("Clear")};
 
     /**
@@ -41,7 +41,7 @@ public class ViewGame extends JInternalFrame implements ActionListener{
         this.myView=myView;
         this.game=game;
         for (int i = 0; i < items.length; i++) { // fuer alle Eintraege:
-            menus[(i<3)?0:(i<6)?1:(i<13)?2:3].add(items[i]); // add Items in Menue 0|1|2
+            menus[(i<3)?0:(i<6)?1:(i<14)?2:3].add(items[i]); // add Items in Menue 0|1|2
             items[i].addActionListener(this);
         }
         for (int i = 0; i < menus.length; i++) // fuer alle Menues:
@@ -150,6 +150,10 @@ public class ViewGame extends JInternalFrame implements ActionListener{
             case "FlipY":{                                       //flips on the y axis (left is right)
                 boardView.setFlipY(!boardView.isFlipY());
                 break;
+            }
+            case "Rotate":{
+                boardView.rotate=!boardView.rotate;
+                boardView.initRotate();
             }
             case "Glider":                                         //set figures on grid
                 game.isPaint=false;

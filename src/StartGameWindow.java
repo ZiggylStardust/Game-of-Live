@@ -12,7 +12,7 @@ import java.beans.PropertyVetoException;
  */
 public class StartGameWindow extends JInternalFrame implements ActionListener{
     private JDesktopPane desk;
-    private JTextField xSize=new JTextField("30"); //Textfield to enter the height and length
+    private JTextField xSize=new JTextField("30"); //Textfield to enter the rotHeight and rotLength
     private JTextField ySize=new JTextField("30");
     private JButton startGame=new JButton("Start");                     //startbutton
     private static int x=0;
