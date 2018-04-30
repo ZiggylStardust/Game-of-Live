@@ -6,11 +6,11 @@ import javax.swing.*;
  * @Version: 1.0
  * @Date: 27/04/18
  */
-public class AnzeigeFlaeche extends JFrame{
+public class DesktopWindow extends JFrame{
      static JDesktopPane desk;
-    static AnzeigeFlaeche desktop = new AnzeigeFlaeche(); // Hauptfenster erzeugen
+    static DesktopWindow desktop = new DesktopWindow(); // Hauptfenster erzeugen
 
-    public AnzeigeFlaeche(){
+    public DesktopWindow(){
         desk = new JDesktopPane(); // neue DesktopPane
         desk.setDesktopManager (new DefaultDesktopManager()); // mit neuem Manager
         setContentPane (desk); // als neue ContentPane
@@ -18,7 +18,7 @@ public class AnzeigeFlaeche extends JFrame{
         setSize(960,1080 ); setLocation(0, 0);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);Ok
         GameOfLife game = new GameOfLife(30, 30, Construction.GLIDER);  //game created with Gleiter Figure
-        ViewGame viewGame = new ViewGame(AnzeigeFlaeche.desktop, game);
+        ViewGame viewGame = new ViewGame(DesktopWindow.desktop, game);
         addChild(viewGame, 50, 50);
 
         setTitle("Game Of Life");

@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  */
 public class ViewGame extends JInternalFrame implements ActionListener{
     static int nr = 0, xpos = 30, ypos = 30;
-    AnzeigeFlaeche myView;
+    DesktopWindow myView;
     private Color dead=Color.GREEN;                 //saves the colors
     private Color alive=Color.RED;
     boolean isFigure=false;                         //is a figure being set
@@ -36,7 +36,7 @@ public class ViewGame extends JInternalFrame implements ActionListener{
      * @param game          reference to GameOfLife
      */
 
-    public ViewGame(AnzeigeFlaeche myView, GameOfLife game){
+    public ViewGame(DesktopWindow myView, GameOfLife game){
         super ("Game " + (++nr), true, true);
         this.myView=myView;
         this.game=game;
@@ -118,19 +118,19 @@ public class ViewGame extends JInternalFrame implements ActionListener{
                 break;
             }
             case "new View":{                         //opens new window
-                ViewGame viewGame1 = new ViewGame(AnzeigeFlaeche.desktop, game); //passes refernce to thread and the boolean values
-                AnzeigeFlaeche.desktop.addChild (viewGame1, xpos+=20, ypos+=20);
+                ViewGame viewGame1 = new ViewGame(DesktopWindow.desktop, game); //passes refernce to thread and the boolean values
+                DesktopWindow.desktop.addChild (viewGame1, xpos+=20, ypos+=20);
                 break;
             }
             case "new Game":{                         //opens new window
-                StartGameWindow sgw=new StartGameWindow(AnzeigeFlaeche.desk);      //Creates a Stargame Window
-                AnzeigeFlaeche.desktop.addChild (sgw, 10, 10); // Ein Kindfenster einfuegen
+                StartGameWindow sgw=new StartGameWindow(DesktopWindow.desk);      //Creates a Stargame Window
+                DesktopWindow.desktop.addChild (sgw, 10, 10); // Ein Kindfenster einfuegen
                 break;
             }
             case "new Copy":{                           //creates a identical independent copy of the current game in a new window
                 GameOfLife copyGame=new GameOfLife(game);
                 ViewGame copyViewGame = new ViewGame(this,copyGame);
-                AnzeigeFlaeche.desktop.addChild (copyViewGame, 10, 10);
+                DesktopWindow.desktop.addChild (copyViewGame, 10, 10);
                 break;
             }
 
