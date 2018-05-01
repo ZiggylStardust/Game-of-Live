@@ -96,6 +96,7 @@ public class ViewGame extends JInternalFrame implements ActionListener{
             case "Set":{                               //enables the option to set cells to alive
                 game.isRun=false;               //pauses the game while setting, viable for change
                 game.isSet=true;
+                game.isPaint=false;
                 isFigure=false;                        //disables setting figures
                 break;
             }

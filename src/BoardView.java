@@ -32,8 +32,9 @@ public class BoardView extends JPanel implements Observer {
         grid=new GridLayout(model.getHeight(),model.getLength());
         rotGrid=new GridLayout(model.getLength(),model.getHeight());
         this.viewGame = viewGame;
-        rotPosition=new ActualButtonPosition[model.getHeight()][model.getHeight()];
-        rotBoardElemnts=new JButton[model.getHeight()][model.getHeight()];
+        rotPosition=new ActualButtonPosition[model.getHeight()][model.getLength()];
+        rotBoardElemnts=new JButton[model.getHeight()][model.getLength()];
+        boardElements = new JButton[model.getLength()][model.getHeight()];
         model.addObserver(this);
         this.setLayout(grid);       //Layout of Buttons
         initializeBoard();
@@ -41,14 +42,13 @@ public class BoardView extends JPanel implements Observer {
     }
 
     private void initializeBoard() {
-        boardElements = new JButton[model.getLength()][model.getHeight()];
         for (int y = 0; y < model.getHeight(); y++) {
             for (int x = 0; x < model.getLength(); x++) {
                 final int xPos = x;
                 final int yPos = y;
-                rotPosition[y][x]=new ActualButtonPosition(x,y);
+                rotPosition[model.getHeight()-1-y][x]=new ActualButtonPosition(x,y);
                 boardElements[x][y] = new JButton();
-                rotBoardElemnts[y][x]=boardElements[x][y];
+                rotBoardElemnts[model.getHeight()-1-y][x]=boardElements[x][y];
 
                 add(boardElements[x][y]);
                 boardElements[x][y].addMouseListener(new java.awt.event.MouseAdapter() {
@@ -72,6 +72,7 @@ public class BoardView extends JPanel implements Observer {
                 });
             }
         }
+
     }
 
     /**
@@ -96,10 +97,9 @@ public class BoardView extends JPanel implements Observer {
      * rotPosition to get actual Position in field
      */
     private void rotateUpdate(){
-        for (int x = 0; x < model.getHeight(); x++) {
-            for (int y = 0; y < model.getLength(); y++) {
+        for (int y = 0; y < model.getLength(); y++) {
+            for (int x = 0; x < model.getHeight(); x++) {
                 boolean modelElement = getCell(rotPosition[x][y].x, rotPosition[x][y].y);
-
                 if (modelElement) {
                     rotBoardElemnts[x][y].setBackground(viewGame.getAlive());
                 } else {
@@ -116,17 +116,17 @@ public class BoardView extends JPanel implements Observer {
          model.setField(cell, getCellX(x), getCellY(y));
     }
     private boolean getCell(int x, int y) {
-
-
-            return model.getField(getCellX(x), (getCellY(y)));
+        return model.getField(getCellX(x), (getCellY(y)));
 
 
     }
     private int getCellX(int x) {
 
-        return flipX ? model.getLength() - 1 - x : x;
+       return flipX ? model.getLength() - 1 - x : x;
+
     }
     private int getCellY(int y) {
+
         return flipY ? model.getHeight() - 1 - y : y;
     }
 
@@ -154,7 +154,7 @@ public class BoardView extends JPanel implements Observer {
      */
     public void rotate(){
         rotate=!rotate;
-        flipX=!flipX;   //Fipping it, because rotation is more than just swapping x and y, it'S also mirrored on the x axis
+        //flipX=!flipX;   //Fipping it, because rotation is more than just swapping x and y, it'S also mirrored on the x axis
         if(rotate){
 
             this.setLayout(rotGrid);
