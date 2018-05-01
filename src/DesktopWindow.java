@@ -17,7 +17,7 @@ public class DesktopWindow extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960,1080 ); setLocation(0, 0);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);Ok
-        GameOfLife game = new GameOfLife(30, 30, Construction.GLIDER);  //game created with Gleiter Figure
+        GameOfLife game = new GameOfLife(5, 10, Construction.GLIDER);  //game created with Gleiter Figure
         ViewGame viewGame = new ViewGame(DesktopWindow.desktop, game);
         addChild(viewGame, 50, 50);
 

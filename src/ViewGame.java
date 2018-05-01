@@ -152,8 +152,9 @@ public class ViewGame extends JInternalFrame implements ActionListener{
                 break;
             }
             case "Rotate":{
-                boardView.rotate=!boardView.rotate;
-                boardView.initRotate();
+                boardView.rotate();
+                break;
+
             }
             case "Glider":                                         //set figures on grid
                 game.isPaint=false;
