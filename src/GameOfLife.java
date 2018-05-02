@@ -151,7 +151,6 @@ public class GameOfLife extends Observable {
                         yPos = 0;
                     }
                     if (fields[xPos][yPos]) {         //increases count if surrounding cell is alive
-
                         countOfLivingCells++;
                     }
                 }

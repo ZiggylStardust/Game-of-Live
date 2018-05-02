@@ -35,6 +35,7 @@ public class BoardView extends JPanel implements Observer {
         model.addObserver(this);
         this.setLayout(grid);       //Layout of Buttons
         initializeBoard();
+        updateLayout();
     }
 
     private void initializeBoard() {
@@ -43,8 +44,6 @@ public class BoardView extends JPanel implements Observer {
                 final int xPos = x;
                 final int yPos = y;
                 boardElements[x][y] = new JButton();
-
-                add(boardElements[x][y]);
                 boardElements[x][y].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {       //Painting hy passing over buttons
                         if (model.isPaint) {                           //If isPaint is true
@@ -65,7 +64,7 @@ public class BoardView extends JPanel implements Observer {
                 });
             }
         }
-
+        updateBoard();
     }
 
     /**
@@ -85,14 +84,8 @@ public class BoardView extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Methode to rotate, sets the flips the roatation anf flipX varaible
-     * replaces the Layout with the rotated Layout
-     * removes buttons and adds the rotated ones
-     */
-    public void rotate() {
+    public void updateLayout() {
         removeAll();
-        rotate = !rotate;
         if (rotate) {
             this.setLayout(rotGrid);
             for (int y = 0; y < model.getLength(); y++) {
@@ -109,6 +102,16 @@ public class BoardView extends JPanel implements Observer {
             }
         }
         updateBoard();
+    }
+
+    /**
+     * Methode to rotate, sets the flips the roatation anf flipX varaible
+     * replaces the Layout with the rotated Layout
+     * removes buttons and adds the rotated ones
+     */
+    public void rotate() {
+        rotate = !rotate;
+        updateLayout();
     }
 
     @Override
