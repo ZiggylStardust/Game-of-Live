@@ -39,7 +39,6 @@ public class BoardView extends JPanel implements Observer {
         model.addObserver(this);
         this.setLayout(grid);       //Layout of Buttons
         initializeBoard();
-        altUpdate();
     }
 
     private void initializeBoard() {
@@ -137,7 +136,6 @@ public class BoardView extends JPanel implements Observer {
 
     public void setFlipX(boolean flipX) {
         this.flipX = flipX;
-        altUpdate();
     }
 
     public boolean isFlipX() {
@@ -150,7 +148,6 @@ public class BoardView extends JPanel implements Observer {
 
     public void setFlipY(boolean flipY) {
         this.flipY = flipY;
-        altUpdate();
     }
 
     /**
@@ -198,16 +195,6 @@ public class BoardView extends JPanel implements Observer {
         }
     }
 
-    /**
-     * alternative update methode to be used not by obaservable
-     */
-    public void altUpdate() {
-            if (!rotate) {
-                updateBoard();
-            } else {
-                rotateUpdate();
-            }
-        }
     @Override
     public void update(Observable o, Object arg) {
         if (o == model) {

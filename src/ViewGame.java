@@ -138,12 +138,10 @@ public class ViewGame extends JInternalFrame implements ActionListener {
 
             case "Change Color Alive": {                            //changes color of living Cells
                 alive = JColorChooser.showDialog(this, "Select living color", Color.RED);
-                boardView.altUpdate();
                 break;
             }
             case "Change Color Dead": {                                 //changes color of dead cells
                 dead = JColorChooser.showDialog(this, "Select dead color", Color.GREEN);
-                boardView.altUpdate();
                 break;
             }
             case "FlipX": {                                       //flips on the y axis (left is right)
