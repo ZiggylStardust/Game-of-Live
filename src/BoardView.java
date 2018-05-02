@@ -93,64 +93,6 @@ public class BoardView extends JPanel implements Observer {
     }
 
     /**
-     * Update methode to be called while rotated, uses rotated Boardelemnts and
-     * rotPosition to get actual Position in field
-     */
-    private void rotateUpdate() {
-        for (int y = 0; y < model.getLength(); y++) {
-            for (int x = 0; x < model.getHeight(); x++) {
-                boolean modelElement = getCell(rotPosition[x][y].x, rotPosition[x][y].y);
-                if (modelElement) {
-                    rotBoardElemnts[x][y].setBackground(viewGame.getAlive());
-                } else {
-                    rotBoardElemnts[x][y].setBackground(viewGame.getDead());
-                }
-            }
-        }
-    }
-
-    private void toggleCell(int x, int y) {
-        setCell(x, y, !getCell(x, y));
-    }
-
-    private void setCell(int x, int y, boolean cell) {
-        model.setField(cell, getCellX(x), getCellY(y));
-    }
-
-    private boolean getCell(int x, int y) {
-        return model.getField(getCellX(x), (getCellY(y)));
-
-
-    }
-
-    private int getCellX(int x) {
-
-        return flipX ? model.getLength() - 1 - x : x;
-
-    }
-
-    private int getCellY(int y) {
-
-        return flipY ? model.getHeight() - 1 - y : y;
-    }
-
-    public void setFlipX(boolean flipX) {
-        this.flipX = flipX;
-    }
-
-    public boolean isFlipX() {
-        return flipX;
-    }
-
-    public boolean isFlipY() {
-        return flipY;
-    }
-
-    public void setFlipY(boolean flipY) {
-        this.flipY = flipY;
-    }
-
-    /**
      * Methode to rotate, sets the flips the roatation anf flipX varaible
      * replaces the Layout with the rotated Layout
      * removes buttons and adds the rotated ones
@@ -179,11 +121,48 @@ public class BoardView extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o == model) {
-            if (!rotate) {
-                updateBoard();
-            } else {
-                rotateUpdate();
-            }
+            updateBoard();
         }
+    }
+
+    private void toggleCell(int x, int y) {
+        setCell(x, y, !getCell(x, y));
+    }
+
+    private void setCell(int x, int y, boolean cell) {
+        model.setField(cell, getCellX(x), getCellY(y));
+    }
+
+    private boolean getCell(int x, int y) {
+        return model.getField(getCellX(x), (getCellY(y)));
+
+
+    }
+
+    private int getCellX(int x) {
+
+        return flipX ? model.getLength() - 1 - x : x;
+
+    }
+
+    private int getCellY(int y) {
+
+        return flipY ? model.getHeight() - 1 - y : y;
+    }
+
+    public boolean isFlipX() {
+        return flipX;
+    }
+
+    public boolean isFlipY() {
+        return flipY;
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
+    }
+
+    public void setFlipY(boolean flipY) {
+        this.flipY = flipY;
     }
 }
