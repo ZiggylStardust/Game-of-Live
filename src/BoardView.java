@@ -18,24 +18,20 @@ public class BoardView extends JPanel implements Observer {
     private boolean flipX = false;               //false is normal, true is flipped
     private boolean flipY = false;
     boolean rotate = false;
-    public ActualButtonPosition[][] rotPosition;
-    public JButton[][] rotBoardElemnts;         //Array of JButtons, rotated 90°
     private GridLayout grid;
     private GridLayout rotGrid;
-
 
     /**
      * @param model    The gamemodel
      * @param viewGame The window
      */
     public BoardView(GameOfLife model, ViewGame viewGame) {
-        this.model = model;
-        grid = new GridLayout(model.getHeight(), model.getLength());
-        rotGrid = new GridLayout(model.getLength(), model.getHeight());
+        this.boardElements = new JButton[model.getLength()][model.getHeight()];
+        this.rotGrid = new GridLayout(model.getLength(), model.getHeight());
+        this.grid = new GridLayout(model.getHeight(), model.getLength());
         this.viewGame = viewGame;
-        rotPosition = new ActualButtonPosition[model.getHeight()][model.getLength()];
-        rotBoardElemnts = new JButton[model.getHeight()][model.getLength()];
-        boardElements = new JButton[model.getLength()][model.getHeight()];
+        this.model = model;
+
         model.addObserver(this);
         this.setLayout(grid);       //Layout of Buttons
         initializeBoard();
@@ -46,9 +42,7 @@ public class BoardView extends JPanel implements Observer {
             for (int x = 0; x < model.getLength(); x++) {
                 final int xPos = x;
                 final int yPos = y;
-                rotPosition[model.getHeight() - 1 - y][x] = new ActualButtonPosition(x, y);
                 boardElements[x][y] = new JButton();
-                rotBoardElemnts[model.getHeight() - 1 - y][x] = boardElements[x][y];
 
                 add(boardElements[x][y]);
                 boardElements[x][y].addMouseListener(new java.awt.event.MouseAdapter() {
@@ -59,7 +53,6 @@ public class BoardView extends JPanel implements Observer {
                     }
                 });
                 boardElements[x][y].addActionListener(e -> {
-
                     if (model.isSet) {//setting cell to alive
                         toggleCell(xPos, yPos);
                     }
@@ -135,18 +128,13 @@ public class BoardView extends JPanel implements Observer {
 
     private boolean getCell(int x, int y) {
         return model.getField(getCellX(x), (getCellY(y)));
-
-
     }
 
     private int getCellX(int x) {
-
         return flipX ? model.getLength() - 1 - x : x;
-
     }
 
     private int getCellY(int y) {
-
         return flipY ? model.getHeight() - 1 - y : y;
     }
 
