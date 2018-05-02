@@ -3,22 +3,24 @@ import java.util.Observer;
 
 /**
  * Game of Live Main logic class
+ *
  * @Author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @Version: 1.0
  * @Date: 27/04/18
  */
 public class GameOfLife extends Observable {
-    public boolean isRun=false;         // checks if game is suposed to be paused
-    public boolean isPaint =false;
-    public boolean isSet=false;
+    public boolean isRun = false;         // checks if game is suposed to be paused
+    public boolean isPaint = false;
+    public boolean isSet = false;
     private Boolean isDone = false;
     UpdateThread thread = new UpdateThread(this);
     private boolean[][] fields;        //fields der Zellen, true ist lebende, false ist tote Zelle
 
     /**
      * Construktor, sets size of game field
-     * @param x         Cells to the right
-     * @param y         Cells down
+     *
+     * @param x Cells to the right
+     * @param y Cells down
      */
     GameOfLife(int x, int y) {
         fields = new boolean[x][y];
@@ -26,18 +28,19 @@ public class GameOfLife extends Observable {
 
     /**
      * Construktor, sets size of game field and initializes it with figure
-     * @param x         Cells to the right
-     * @param y         Cells down
-     * @param muster    enum, represents a figure to placed on the field
+     *
+     * @param x      Cells to the right
+     * @param y      Cells down
+     * @param muster enum, represents a figure to placed on the field
      */
 
-    GameOfLife(int x, int y, Construction muster){
+    GameOfLife(int x, int y, Construction muster) {
         fields = new boolean[x][y];
-        boolean[][] figur= ConstructionField.getForm(muster);
-        if(figur.length< getLength()&&figur[0].length< getHeight()){
-            for(y=0;y<figur[0].length;y++){
-                for(x=0;x<figur.length;x++){
-                    fields[x][y]=figur[x][y];
+        boolean[][] figur = ConstructionField.getForm(muster);
+        if (figur.length < getLength() && figur[0].length < getHeight()) {
+            for (y = 0; y < figur[0].length; y++) {
+                for (x = 0; x < figur.length; x++) {
+                    fields[x][y] = figur[x][y];
                 }
             }
         }
@@ -47,13 +50,14 @@ public class GameOfLife extends Observable {
 
     /**
      * Copy Constructor
-     * @param game  The game to be copied
+     *
+     * @param game The game to be copied
      */
-    public GameOfLife(GameOfLife game){
-        fields=new boolean[game.getLength()][game.getHeight()];
-        isRun=game.isRun;         // checks if game is suposed to be paused
-        isPaint =game.isPaint;
-        isSet=game.isSet;
+    public GameOfLife(GameOfLife game) {
+        fields = new boolean[game.getLength()][game.getHeight()];
+        isRun = game.isRun;         // checks if game is suposed to be paused
+        isPaint = game.isPaint;
+        isSet = game.isSet;
         isDone = game.isDone;
         setFields(game.fields);
         thread.start();
@@ -63,12 +67,13 @@ public class GameOfLife extends Observable {
 
     /**
      * Sets the velue of a field to that of teh paramater value
-     * @param value     the new value
-     * @param x         the x Position
-     * @param y         the y position
+     *
+     * @param value the new value
+     * @param x     the x Position
+     * @param y     the y position
      */
     public void setField(boolean value, int x, int y) {
-        if(fields[x][y] != value) {
+        if (fields[x][y] != value) {
             fields[x][y] = value;
             setChanged();
             notifyObservers();
@@ -77,9 +82,10 @@ public class GameOfLife extends Observable {
 
     /**
      * returns the value of a field
-     * @param x     the x value of the field
-     * @param y     the y value
-     * @return      the value of the field
+     *
+     * @param x the x value of the field
+     * @param y the y value
+     * @return the value of the field
      */
     public boolean getField(int x, int y) {
         return fields[x][y];
@@ -87,12 +93,13 @@ public class GameOfLife extends Observable {
 
     /**
      * overwrites the gamefield with a new gamefield after update
-     * @param fields    the updated game field
+     *
+     * @param fields the updated game field
      */
     private void setFields(boolean[][] fields) {
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getLength(); x++) {
-                if(this.fields[x][y] != fields[x][y]) {
+                if (this.fields[x][y] != fields[x][y]) {
                     this.fields[x][y] = fields[x][y];
                 }
             }
@@ -109,17 +116,16 @@ public class GameOfLife extends Observable {
         boolean[][] tempFeld = new boolean[getLength()][getHeight()];
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getLength(); x++) {
-            tempFeld[x][y]=checkSurrounding(x,y);
+                tempFeld[x][y] = checkSurrounding(x, y);
             }
         }
         setFields(tempFeld);
     }
 
     /**
-     *
-     * @param initial_x         x of the cell (left - right)
-     * @param initial_y         y position of cell(up - dwon)
-     * @return                  Is cell aliv?(true =yes, false =no)
+     * @param initial_x x of the cell (left - right)
+     * @param initial_y y position of cell(up - dwon)
+     * @return Is cell aliv?(true =yes, false =no)
      */
     public boolean checkSurrounding(int initial_x, int initial_y) {
         boolean cellsLives = false;     //return wert
@@ -131,7 +137,7 @@ public class GameOfLife extends Observable {
                 /**
                  * Überprüft, ob die Zelle auserhalb des Arrays liegt, wenn das Passiert, wird die gegüberliegnde Zelle betrachet
                  */
-                if(!(x==initial_x&&y==initial_y)) {
+                if (!(x == initial_x && y == initial_y)) {
                     if (xPos == -1) {
                         xPos = getLength() - 1;
                     }
@@ -171,41 +177,45 @@ public class GameOfLife extends Observable {
     }
 
     /**
-     *resets the field = kills every cell
+     * resets the field = kills every cell
      */
-    public void resetFeld(){
+    public void resetFeld() {
         setFields(new boolean[getLength()][getHeight()]);
     }
-    public int getHeight(){
+
+    public int getHeight() {
         return fields[0].length;
     }
-    public int getLength(){
+
+    public int getLength() {
         return fields.length;
     }
 
     /**
      * Places a figure in the game
-     * @param initial_x     The x value where the figure begins
-     * @param initial_y     The y Value where the figure begins
+     *
+     * @param initial_x The x value where the figure begins
+     * @param initial_y The y Value where the figure begins
      * @param figure
      */
-    public void addFigure(int initial_x, int initial_y, boolean[][] figure){
-        for(int y=0;y<figure[0].length;y++){
-            for(int x=0;x<figure.length;x++){
-                if(figure[x][y]){
-                    int xPos=(x+initial_x)%getLength();     //Modulo used to prevent out of bounds exeptions
-                    int yPos=(y+initial_y)%getHeight();
+    public void addFigure(int initial_x, int initial_y, boolean[][] figure) {
+        for (int y = 0; y < figure[0].length; y++) {
+            for (int x = 0; x < figure.length; x++) {
+                if (figure[x][y]) {
+                    int xPos = (x + initial_x) % getLength();     //Modulo used to prevent out of bounds exeptions
+                    int yPos = (y + initial_y) % getHeight();
                     setField(true, xPos, yPos);
-                    }
                 }
             }
+        }
         setChanged();
         notifyObservers();
     }
 
     /**
      * Used to set the speed = wait time for thread
-     * @param speed     spped in miliseconds to wait for update
+     *
+     * @param speed spped in miliseconds to wait for update
      */
     public void setSpeed(int speed) {
         thread.setSpeed(speed);
@@ -219,7 +229,7 @@ public class GameOfLife extends Observable {
     public synchronized void deleteObserver(Observer o) {
         super.deleteObserver(o);
         System.out.println(countObservers());
-        if(countObservers() == 0) {
+        if (countObservers() == 0) {
             thread.stop();
         }
     }
