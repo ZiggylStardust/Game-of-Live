@@ -156,43 +156,24 @@ public class BoardView extends JPanel implements Observer {
      * removes buttons and adds the rotated ones
      */
     public void rotate() {
+        removeAll();
         rotate = !rotate;
         if (rotate) {
-
-
-            for (int y = 0; y < model.getHeight(); y++) {
-                for (int x = 0; x < model.getLength(); x++) {
-                    remove(boardElements[x][y]);
-                }
-            }
             this.setLayout(rotGrid);
-            this.validate();
             for (int y = 0; y < model.getLength(); y++) {
                 for (int x = 0; x < model.getHeight(); x++) {
-                    add(rotBoardElemnts[x][y]);
+                    add(boardElements[y][model.getHeight() - 1 - x]);
                 }
             }
-
-            rotateUpdate();
-            setVisible(false);
-            setVisible(true);
-
         } else {
-            for (int y = 0; y < model.getLength(); y++) {
-                for (int x = 0; x < model.getHeight(); x++) {
-                    remove(rotBoardElemnts[x][y]);
-                }
-            }
-
+            this.setLayout(grid);
             for (int y = 0; y < model.getHeight(); y++) {
                 for (int x = 0; x < model.getLength(); x++) {
                     add(boardElements[x][y]);
                 }
             }
-            this.setLayout(grid);
-            this.validate();
-            updateBoard();
         }
+        updateBoard();
     }
 
     @Override
