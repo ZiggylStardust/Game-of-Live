@@ -20,6 +20,7 @@ public class BoardView extends JPanel implements Observer {
     boolean rotate = false;
     private GridLayout grid;
     private GridLayout rotGrid;
+    static int count = 0;
 
     /**
      * @param model    The gamemodel
@@ -75,14 +76,21 @@ public class BoardView extends JPanel implements Observer {
             for (int x = 0; x < model.getLength(); x++) {
                 boolean modelElement = getCell(x, y);
 
-                if (modelElement) {
-                    boardElements[x][y].setBackground(viewGame.getAlive());
-                } else {
-                    boardElements[x][y].setBackground(viewGame.getDead());
+                /**
+                 * Update of thread can sometimes be called while new view is still being build, thus causing a crash
+                 */
+                if (boardElements[x][y] != null) {
+                    if (modelElement) {
+                        boardElements[x][y].setBackground(viewGame.getAlive());
+                    } else {
+                        boardElements[x][y].setBackground(viewGame.getDead());
+                    }
                 }
             }
         }
     }
+
+
 
     public void updateLayout() {
         removeAll();

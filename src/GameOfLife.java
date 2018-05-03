@@ -227,7 +227,6 @@ public class GameOfLife extends Observable {
     @Override
     public synchronized void deleteObserver(Observer o) {
         super.deleteObserver(o);
-        System.out.println(countObservers());
         if (countObservers() == 0) {
             thread.stop();
         }
